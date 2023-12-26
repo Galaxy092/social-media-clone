@@ -14,6 +14,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <!-- Boxicon Link -->
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <!-- Include Toastr library -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
     <title>About Us - Social Kh</title>
 </head>
 
@@ -52,14 +54,14 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="/src/pages/friend.html"
+                                <a id="friendsLink" href="#"
                                     class="flex items-center py-2 px-10 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                                     <img src="../../img/Friends.svg" alt="Friends">
                                     <span class="ml-9 whitespace-nowrap">Friends</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="/src/pages/profile.html"
+                                <a id="profileLink1" href="#"
                                     class="flex items-center py-2 px-10 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                                     <img src="../../img/Profile.svg" alt="Profile">
                                     <span class="ml-9 whitespace-nowrap">Profile</span>
@@ -80,7 +82,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="/src/pages/setting.html"
+                                <a id="settingLink" href="#"
                                     class="flex items-center py-2 px-10 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                                     <img src="../../img/Setting.svg" alt="Setting">
                                     <span class="ml-9 whitespace-nowrap">Setting</span>
@@ -88,10 +90,10 @@
                             </li>
                             <div class="bg-white h-32"></div>
                             <li>
-                                <a href="javascript:void(0);" onclick="logout()"
-                                    class="flex items-center py-2 px-10 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                                <a href="javascript:void(0);" onclick="handleButtonClick()"
+                                    class="flex items-center py-2 px-10 text-gray-900 rounded-lg hover:bg-gray-100 group">
                                     <img src="../../img/Logout.svg" alt="Setting">
-                                    <span class="ml-9 whitespace-nowrap">Logout</span>
+                                    <span class="ml-9 whitespace-nowrap" id="logoutText">Logout</span>
                                 </a>
                             </li>
                         </ul>
@@ -1125,6 +1127,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.1.1/flowbite.min.js"></script>
 <!-- jQuery Script -->
 <script src="../../js/jQuery.js"></script>
+<!-- Toastr -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 <!-- Custom Script -->
 <script src="../../js/aboutus.js"></script>
 <script src="../../js/createpost.js"></script>

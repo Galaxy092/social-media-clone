@@ -558,10 +558,11 @@ function showIconByIndex(dropdownIndex, iconIndex) {
 
 // Function to copy text to clipboard
 function copyToClipboard(text) {
+  const baseUrl = 'https://social-kh.vercel.app'; // Replace with your actual production URL
   const tempInput = $('<input>');
   $('body').append(tempInput);
   tempInput
-    .val(`http://localhost:5500/src/pages/post.html?id=${text}`)
+    .val(`${baseUrl}/src/pages/post.html?id=${text}`)
     .select();
   document.execCommand('copy');
   tempInput.remove();
