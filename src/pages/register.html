@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- TailwindCSS Link -->
+    <link href="/dist/output.css" rel="stylesheet">
+    <!-- Flowbite CDN -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.css" rel="stylesheet" />
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="/img/cropped-confluence.png" type="image/x-icon">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- Include Toastr library -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+    <title>Register - Social Kh</title>
+</head>
+
+<body>
+    <main class="mx-auto grid xl:grid-cols-2 lg:overflow-hidden">
+        <section class="xl:h-screen xl:w-full overflow-hidden xl:static xl:block hidden">
+            <div class="bg-accent xl:w-[95%] h-screen ">
+                <img class=" lg:relative lg:left-12 w-auto h-auto " src="/img/register1.png" alt="phone-illutration">
+            </div>
+
+        </section>
+        <section class="mx-auto h-screen w-[90%] ">
+            <div class="p-2">
+
+                <div class="pt-8 mb-8 text-accent">
+                    <h1 class="font-semibold leading-[56px] text-[48px] mb-2">Hello,<br>Welcome Newbie!</h1>
+                    <h1 class="font-normal text-[22px]">Sign up for new account here!</h1>
+                </div>
+
+                <form class="max-w-1/2 mx-auto bg-primary ">
+                    <div class="mb-5">
+                        <label for="username" class="block mb-2 text-sm font-medium text-accent ">Username</label>
+                        <input type="text" id="username"
+                            class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                            placeholder="Username" required>
+                    </div>
+                    <div class="mb-5">
+                        <label for="email" class="block mb-2 text-sm font-medium text-accent ">Email</label>
+                        <input type="email" id="email"
+                            class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                            placeholder="example@gmail.com" required>
+                    </div>
+                    <div class="mb-5">
+                        <label for="password" class="block mb-2 text-sm font-medium text-accent">Your password</label>
+                        <div class="relative">
+                            <input type="password" id="password" class="password-input shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
+                            <button type="button" class="toggle-password absolute inset-y-0 right-0 flex items-center px-2 focus:outline-none">
+                                Show
+                            </button>
+                        </div>
+                    </div>
+                
+                    <div class="mb-2">
+                        <label for="repeat-password" class="block mb-2 text-sm font-medium text-accent">Repeat password</label>
+                        <div class="relative">
+                            <input type="password" id="repeat-password" class="password-input shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
+                            <button type="button" class="toggle-password absolute inset-y-0 right-0 flex items-center px-2 focus:outline-none">
+                                Show
+                            </button>
+                        </div>
+                    </div>
+                    <div class="mb-8 ">
+                        <label for="terms" class="ms-2 text-sm font-medium text-accent lg:block hidden">Already have an
+                            account? <a href="./login.html"
+                                class="text-blue-600 hover:underline dark:text-blue-500 ml-1">Login.</a></label>
+                    </div>
+                    <div class="lg:block lg:space-x-4 flex flex-col space-y-4">
+                        <button action="action" onclick="window.history.go(-1); return false;" type="submit"
+                            value="Cancel"
+                            class="text-accent bg-primary hover:text-primary hover:bg-accent border-solid border-2 border-accent focus:ring-4  focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-7 py-2.5 text-center">Back</button>
+                        <button onclick="register()" type="button"
+                            class="text-white bg-blue-500 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-7 py-2.5 text-center">Sign
+                            Up</button>
+
+                    </div>
+                    <div class="my-8">
+                        <hr class="lg:hidden my-4">
+                        <label for="terms" class=" text-sm font-medium text-accent lg:hidden block  text-center">Don't
+                            have an account yet? <a href="./register.html"
+                                class="text-blue-600 hover:underline dark:text-blue-500 ml-1">Sign up.</a><br></label>
+                    </div>
+                </form>
+            </div>
+
+        </section>
+
+    </main>
+</body>
+<!-- Flowbite JS CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.js"></script>
+<!-- jQuery Script -->
+<script src="../../js/jQuery.js"></script>
+<!-- Custom Script -->
+<script src="../../js/register.js"></script>
+<!-- Toastr -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
+</html>

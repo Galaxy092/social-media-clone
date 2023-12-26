@@ -1,0 +1,28 @@
+/* Add your styles for the popup/modal here */
+#story-popup {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    margin: auto;
+    z-index: 2;
+}
+
+#close-popup {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+}
+
+#imgId {
+    width: 30rem;
+    height: 40rem;
+}
+
+#story-indicator-bar {
+    width: 29rem;
+}

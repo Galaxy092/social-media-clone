@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- TailwindCSS CDN -->
+    <link href="/dist/output.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Flowbite CDN -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.css" rel="stylesheet" />
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="/img/cropped-confluence.png" type="image/x-icon">
+    <!-- font awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Boxicon Link -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <!-- Include Toastr library -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/story.css">
+    <title>Home - Social Kh</title>
+</head>
+
+<body>
+    <!-- seperate into three cols in a page -->
+    <!-- left side-bar, conent, and right side-bar -->
+    <section class="flex min-h-full w-full text-center">
+        <div id="loginMessage"></div>
+        <!-- left side-bar -->
+        <aside class="lg:w-1/5 md:w-1/10 sm:w-1/10 p-4 text-xl">
+            <div class="sticky top-0">
+                <aside id="default-sidebar"
+                    class="mt-8 fixed top-0 left-0 z-40 sm:w-[1rem] md:w-[2rem] lg:w-[13rem] xl:w-[18rem] h-screen transition-transform -translate-x-full sm:translate-x-0"
+                    aria-label="Sidebar">
+                    <div class="h-full px-3 py-4 overflow-y-auto bg-primary hidden sm:hidden md:hidden lg:block">
+                        <a href="/src/pages/home.html" class="flex items-center mb-10">
+                            <div class="flex justify-center items-center mx-auto">
+                                <img src="../../img/cropped-confluence.png" class="h-10 me-3 sm:h-3 md:h-10"
+                                    alt="Social Kh" />
+                                <span class="self-center text-3xl font-semibold whitespace-nowrap">Social Kh</span>
+                            </div>
+                        </a>
+                        <ul class="space-y-2 font-medium flex flex-col">
+                            <li>
+                                <a href="/src/pages/home.html"
+                                    class="flex items-center py-2 px-10 text-gray-900 rounded-lg bg-gray-100 group">
+                                    <img src="../../img/Home.svg" alt="Home">
+                                    <span class="ml-9 sm:hidden md:block">Home</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" data-modal-target="authentication-modal"
+                                    data-modal-toggle="authentication-modal"
+                                    class="flex items-center py-2 px-10 text-gray-900 rounded-lg hover:bg-gray-100 group">
+                                    <img src="../../img/Search.svg" alt="Search">
+                                    <span class="ml-9 whitespace-nowrap">Search</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/src/pages/friend.html"
+                                    class="flex items-center py-2 px-10 text-gray-900 rounded-lg hover:bg-gray-100 group">
+                                    <img src="../../img/Friends.svg" alt="Friends">
+                                    <span class="ml-9 whitespace-nowrap">Friends</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/src/pages/profile.html"
+                                    class="flex items-center py-2 px-10 text-gray-900 rounded-lg hover:bg-gray-100 group">
+                                    <img src="../../img/Profile.svg" alt="Profile">
+                                    <span class="ml-9 whitespace-nowrap">Profile</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" data-modal-target="medium-modal" data-modal-toggle="medium-modal"
+                                    class="flex items-center py-2 px-10 text-gray-900 rounded-lg hover:bg-gray-100 group">
+                                    <img src="../../img/Create.svg" alt="Create">
+                                    <span class="ml-9 whitespace-nowrap">Create</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/src/pages/aboutus.html"
+                                    class="flex items-center py-2 px-10 text-gray-900 rounded-lg hover:bg-gray-100 group">
+                                    <img src="../../img/About Us.svg" alt="About Us">
+                                    <span class="ml-9 whitespace-nowrap">About</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/src/pages/setting.html"
+                                    class="flex items-center py-2 px-10 text-gray-900 rounded-lg hover:bg-gray-100 group">
+                                    <img src="../../img/Setting.svg" alt="Setting">
+                                    <span class="ml-9 whitespace-nowrap">Setting</span>
+                                </a>
+                            </li>
+                            <div class="bg-white h-32"></div>
+                            <li>
+                                <a href="javascript:void(0);" onclick="logout()"
+                                    class="flex items-center py-2 px-10 text-gray-900 rounded-lg hover:bg-gray-100 group">
+                                    <img src="../../img/Logout.svg" alt="Setting">
+                                    <span class="ml-9 whitespace-nowrap">Logout</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </aside>
+            </div>
+            <div class="flex h-screen w-16 flex-col justify-between sticky top-0 lg:hidden">
+                <div>
+                    <div class="inline-flex h-16 w-16 items-center justify-center">
+                        <a href="/src/pages/home.html" class="flex items-center mb-10">
+                            <div class="flex justify-center items-center mx-auto">
+                                <img src="../../img/cropped-confluence.png" class="h-10 sm:h-10 md:h-10"
+                                    alt="Social Kh" />
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="border-t border-gray-100">
+                        <div class="px-2">
+                            <div class="py-4">
+                            </div>
+
+                            <ul class="space-y-2 font-medium pt-4">
+                                <li>
+                                    <a href="/src/pages/home.html"
+                                        class="t group relative flex justify-center rounded bg-gray-100 px-2 py-1.5 text-blue-700">
+                                        <img src="../../img/Home.svg" alt="Home">
+
+                                        <span
+                                            class="absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-xs font-medium text-white opacity-0 group-hover:opacity-100">
+                                            Home
+                                        </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" data-modal-target="authentication-modal"
+                                        data-modal-toggle="authentication-modal"
+                                        class="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-100 hover:text-gray-700">
+                                        <img src="../../img/Search.svg" alt="Search">
+
+                                        <span
+                                            class="absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-xs font-medium text-white opacity-0 group-hover:opacity-100">
+                                            Search
+                                        </span>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="/src/pages/friend.html"
+                                        class="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-100 hover:text-gray-700">
+                                        <img src="../../img/Friends.svg" alt="Friends">
+
+                                        <span
+                                            class="absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-xs font-medium text-white opacity-0 group-hover:opacity-100">
+                                            Friend
+                                        </span>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="/src/pages/profile.html"
+                                        class="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-100 hover:text-gray-700">
+                                        <img src="../../img/Profile.svg" alt="Profile">
+
+                                        <span
+                                            class="absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-xs font-medium text-white opacity-0 group-hover:opacity-100">
+                                            Profile
+                                        </span>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#" data-modal-target="medium-modal" data-modal-toggle="medium-modal"
+                                        class="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-100 hover:text-gray-700">
+                                        <img src="../../img/Create.svg" alt="Create">
+
+                                        <span
+                                            class="absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-xs font-medium text-white opacity-0 group-hover:opacity-100">
+                                            Create
+                                        </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/src/pages/aboutus.html"
+                                        class="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-100 hover:text-gray-700">
+                                        <img src="../../img/About Us.svg" alt="About Us">
+
+                                        <span
+                                            class="absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-xs font-medium text-white opacity-0 group-hover:opacity-100">
+                                            About Us
+                                        </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/src/pages/setting.html"
+                                        class="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-100 hover:text-gray-700">
+                                        <img src="../../img/Setting.svg" alt="Setting">
+
+                                        <span
+                                            class="absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-xs font-medium text-white opacity-0 group-hover:opacity-100">
+                                            Setting
+                                        </span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sticky inset-x-0 bottom-0 border-t border-gray-100 bg-white p-2">
+                    <button type="submit" onclick="logout()"
+                        class="group relative flex w-full justify-center rounded-lg px-2 py-1.5 text-sm text-gray-500 hover:bg-gray-100 hover:text-gray-700">
+                        <img src="../../img/Logout.svg" alt="Logout">
+
+                        <span
+                            class="absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-xs font-medium text-white opacity-0 group-hover:opacity-100">
+                            Logout
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Popup search -->
+        <div id="authentication-modal" tabindex="-1" aria-hidden="true"
+            class="hidden overflow-x-hidden absolute top-0 right-0 left-0 z-50 justify-center items-center">
+            <div class="relative pt-24 w-full max-w-4xl max-h-full duration-300 transition-transform ">
+                <label for="default-search"
+                    class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
+                <div class="relative">
+                    <div class="absolute top-0 inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                        <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                        </svg>
+                    </div>
+                    <input onkeyup="findUsername()" type="search" id="input-search"
+                        class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
+                        placeholder="Search username" required>
+                    <div class="top-10 hidden z-50 w-full" id="search_list">
+                        <ul class="w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg overflow-y-auto max-h-[300px]"
+                            id="search_card_list">
+                            <!-- render from js -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Creat Post Pop up -->
+        <div id="medium-modal" tabindex="-1"
+            class="fixed hidden top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+            <div class="relative w-full max-w-lg max-h-full">
+                <div class="relative">
+                    <div class="mt-14 md:mx-6 md:w-full lg:w-full">
+                        <div
+                            class="mx-auto h-auto w-10/12 flex bg-white flex-col text-gray-800 border border-gray-300 pt-2 rounded-lg shadow-lg max-w-sm">
+                            <div class="flex p-2 md:p-2">
+                                <div class="text-xl ml-2 font-medium text-gray-600">
+                                    <h3>Create post</h3>
+                                </div>
+                                <button type="button"
+                                    class="text-gray-700 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-full text-md w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                                    data-modal-hide="medium-modal">
+                                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                        fill="none" viewBox="0 0 14 14">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                            stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                                    </svg>
+                                    <span class="sr-only">Close modal</span>
+                                </button>
+                            </div>
+
+                            <div class="border border-black-200 w-full"></div>
+                            <form class="px-4 mt-4 md:p-2">
+                                <div class="grid gap-4 grid-cols-2">
+                                    <div class="col-span-2">
+                                        <label for="title" class="block text-start mb-2 text-sm font-medium text-gray-900">Title</label>
+                                        <input type="text" id="title" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Enter your title" required>
+                                        <div id="titleError" class="text-red-500 text-sm hidden mt-1 text-start">Please enter a title.</div>
+                                    </div>
+                                    <div class="col-span-2">
+                                        <label for="categories" class="block mb-2 text-sm font-medium text-start text-gray-900">Category</label>
+                                        <select id="categories" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:focus:ring-blue-500 dark:focus:border-blue-500"></select>
+                                    </div>
+                                    <div class="col-span-2">
+                                        <label class="block mb-2 text-sm text-start font-medium text-gray-900" for="user_avatar">Upload file</label>
+                                        <!-- Preview Image -->
+                                        <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none" id="file" type="file" onchange="previewImage()">
+                                        <div class="col-span-2">
+                                            <label id="labelPreview" class="hidden mb-2 text-sm font-medium text-gray-900" for="preview">Preview Image</label>
+                                            <img id="preview" class="w-full h-auto mb-4 hidden" alt="Preview Image">
+                                        </div>
+                                        <div id="fileError" class="text-red-500 text-sm hidden text-start">Please select a file.</div>
+                                    </div>
+                                    <div class="col-span-2">
+                                        <!-- Description -->
+                                        <label for="message" class="block mb-2 text-start text-sm font-medium text-gray-900">Description</label>
+                                        <textarea id="message" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-blue-500" placeholder="Leave a comment..." required></textarea>
+                                        <div id="descriptionError" class="text-red-500 text-sm hidden text-start">Please enter a description.</div>
+                                    </div>
+                                </div>
+                                <div class="flex justify-end pt-4">
+                                    <!-- Pass the event object to validateAndCreatePost -->
+                                    <button type="button" onclick="validateAndCreatePost(event)" data-modal-hide="medium-modal" class="text-white inline-flex items-center bg-blue-500 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                                        Post
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Create Story Pop up -->
+        <div id="story-modal" tabindex="-1" aria-hidden="true"
+            class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+            <div class="relative p-4 w-full max-w-md max-h-full">
+                <!-- Modal content -->
+                <div class="relative bg-white rounded-lg shadow ">
+                    <!-- Modal header -->
+                    <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t ">
+                        <h3 class="text-lg font-semibold text-gray-900 ">
+                            Create Story
+                        </h3>
+                        <button type="button"
+                            class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center "
+                            data-modal-toggle="story-modal">
+                            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                viewBox="0 0 14 14">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                            </svg>
+                            <span class="sr-only">Close modal</span>
+                        </button>
+                    </div>
+                    <!-- Modal body -->
+                    <form class="p-4 md:p-5">
+                        <div class="grid gap-4 mb-4 grid-cols-2">
+                            <div class="col-span-2">
+                                <label class="block mb-2 text-sm font-medium text-gray-900 " for="file_input">Upload
+                                    Photo</label>
+                                <input
+                                    class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 "
+                                    id="file_input" type="file">
+                                <p class="mt-2 text-xs text-gray-500 " id="file_input_help">SVG, PNG, JPG or GIF (MAX.
+                                    800x400px).</p>
+                            </div>
+
+                        </div>
+                        <div class="flex justify-end pt-4">
+                            <button type="button" onclick="createStory()" data-modal-hide="story-modal"
+                                class="text-white inline-flex items-center bg-blue-500 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">
+                                <svg class="me-1 -ms-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                        d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
+                                Add Story
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- content -->
+        <main class="lg:w-3/5 md:w-11/12 sm:w-11/12 p-4 text-xl bg-gray-200">
+            <section>
+                <div class="flex overflow-x-auto space-x-8 w-auto mx-auto no-scrollbar" id="stories-container">
+
+                </div>
+            </section>
+
+            <section class="max-w-7xl mx-auto py-4">
+                <div class="flex items-center overflow-x-auto no-scrollbar md:hidden lg:hidden">
+                    <div class="flex space-x-4 md:hidden lg:hidden" id="categoryResponsive">
+                        <!-- Buttons will be dynamically added here -->
+                    </div>
+                </div>
+            </section>
+
+            <section class="post" id="postSection">
+                <!-- Wrapper-->
+
+                <!-- End Wrapper-->
+            </section>
+        </main>
+
+        <!-- right side-bar -->
+        <aside class="lg:w-1/5 md:hidden sm:hidden hidden lg:block my-4 min-h-full right-0">
+            <div class="sticky top-0 flex gap-y-4 flex-col">
+                <!-- top section -->
+                <section class="h-fit w-full bg-white rounded-lg">
+                    <div class="m-4 flex flex-wrap gap-y-8">
+                        <div class="flex justify-between w-full">
+                            <div class="flex gap-4">
+                                <div id="profileLink">
+                                    <!-- The 'id' attribute is added to the outer div for easier manipulation in JavaScript -->
+                                    <div class="flex gap-4">
+                                        <img class="h-10 w-10 rounded-full mt-2" id="profilePic" src="" alt="">
+                                        <div class="flex flex-wrap">
+                                            <p id="userName" class="text-start font-bold"></p>
+                                            <p id="userGmail" class="text-start"></p>
+                                        </div>
+                                        <img src="/img/Arrow.svg" alt="">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- suggestion section -->
+                <section class="h-fit w-full bg-white rounded-lg pb-4">
+                    <p class="font-bold text-start text-gray-500 bg-white rounded-lg p-4">
+                        SUGGESTION
+                    </p>
+
+                    <div class="mx-4 flex flex-wrap gap-y-8" id="userListContainer">
+                        
+                    </div>
+                </section>
+
+                <!-- recommend section -->
+                <section class="h-fit bg-white rounded-lg pb-4 w-full gap-y-4 flex flex-col" id="categorySection">
+                    <p class="font-bold text-start text-gray-500 bg-white rounded-lg px-4 pt-4 h-fit">
+                        HIGHLY RECOMMEND FOR YOU
+                    </p>
+                </section>
+            </div>
+        </aside>
+    </section>
+</body>
+<!-- Flowbite JS CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.js"></script>
+<!-- jQuery Script -->
+<script src="../../js/jQuery.js"></script>
+<!-- Custom Script -->
+<script src="../../js/script.js"></script>
+<script src="../../js/createpost.js"></script>
+<script src="../../js/createstory.js"></script>
+<script src="../../js/categoryByPost.js"></script>
+<!-- Apline JS CDN -->
+<script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+<!-- Toastr -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
+<script src="https://unpkg.com/create-file-list"></script>
+
+</html>
