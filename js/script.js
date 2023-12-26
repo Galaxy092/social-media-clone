@@ -121,15 +121,6 @@ function logout() {
   window.location.href = '/src/pages/login.html';
 }
 
-// function logout() {
-//   // Clear local storage
-//   localStorage.clear();
-//   // Clear toast sessionStorage
-//   sessionStorage.clear();
-
-//   window.location.href = '/src/pages/login.html';
-// }
-
 $(document).ready(function () {
   // Function to get URL parameters
   function getUrlParameter(name) {
@@ -201,10 +192,24 @@ $(document).ready(function () {
     method: 'GET',
     dataType: 'json',
     success: function (data) {
-      // Iterate through the latest stories and append a new section for each to the stories-container
+      // Keep track of the latest story for each user
+      const latestStoriesByUser = {};
+
+      // Iterate through the stories
       $.each(data.data, function (index, story) {
+        const userId = story.attributes.user.data.id;
+
+        // Check if we already have a story for this user
+        if (!latestStoriesByUser[userId] || new Date(story.attributes.createdAt) > new Date(latestStoriesByUser[userId].attributes.createdAt)) {
+          // Update the latest story for this user
+          latestStoriesByUser[userId] = story;
+        }
+      });
+
+      // Iterate through the latest stories and append a new section for each to the stories-container
+      $.each(latestStoriesByUser, function (userId, story) {
         $('#stories-container').append(`
-          <section class="flex-shrink-0 rounded-full border-2 w-3/12 sm:w-2/5 md:w-3/12 lg:w-[200px]">
+          <section class="flex-shrink-0 rounded-full border-2 w-7/12 sm:w-2/5 md:w-3/12 lg:w-[200px]">
             <a href='/src/pages/story.html'>
               <div class="relative grid h-[20rem] w-full max-w-[28rem] flex-col items-end justify-center overflow-hidden rounded-xl bg-white bg-clip-border text-center text-gray-700">
                 <div class="absolute inset-0 m-0 h-full w-full overflow-hidden rounded-none bg-transparent bg-cover bg-clip-border bg-center text-gray-700 shadow-none"
@@ -241,195 +246,6 @@ function getIDFromUrl() {
   const id = url.get('id');
   return id;
 }
-
-// display all post
-// $(document).ready(function () {
-//   // Fetch post from the API
-//   $.ajax({
-//     url: 'https://cms.istad.co/api/sm-posts?populate=photo,user.profile,comments.user.profile',
-//     method: 'GET',
-//     dataType: 'json',
-//     success: function (data) {
-//       // Sort the data array based on created_at in descending order
-//       data.data.sort(function (a, b) {
-//         return (
-//           new Date(b.attributes.createdAt) - new Date(a.attributes.createdAt)
-//         );
-//       });
-//       $.each(data.data, function (index, post) {
-//         const postContainer = $('.post').append(`
-//             <!-- Wrapper-->
-//             <div class="wrapper">
-//                 <!-- Content grid -->
-//                 <div class="max-w-7xl mx-auto">
-//                     <!-- Card-->
-//                     <article class="mb-4 break-inside p-6 rounded-xl bg-white">
-//                         <div class="flex pb-6 items-center justify-between">
-//                             <div class="flex">
-//                                 <a class="inline-block mr-4" href="/src/pages/details.html?id=${
-//                                   post.attributes.user.data.id
-//                                 }">
-//                                     <img src="https://cms.istad.co${
-//                                       post.attributes.user.data.attributes
-//                                         .profile.data.attributes.url
-//                                     }" class="rounded-full max-w-none w-14 h-14" src="" />
-//                                 </a>
-//                                 <div class="flex flex-col">
-//                                     <h6 class="inline-block text-lg font-bold text-start">
-//                                       <a href="/src/pages/details.html?id=${
-//                                         post.attributes.user.data.id
-//                                       }">${
-//           post.attributes?.user?.data?.attributes?.username
-//         }</a>
-//                                     </h6>
-
-//                                     <div class="text-slate-500" id="formattedDate">
-//                                       ${formatDate(post.attributes.createdAt)}
-//                                     </div>
-//                                 </div>
-//                             </div>
-//                         </div>
-//                         <h2 class="font-semibold text-start">
-//                             ${post.attributes.title}
-//                         </h2>
-//                         <div class="py-4">
-//                             <div id="default-carousel" class="relative w-full" data-carousel="slide" data-index="${index}">
-//                                 <img class="w-full rounded-lg" src="https://cms.istad.co${
-//                                   post.attributes.photo.data.attributes.url
-//                                 }">
-//                             </div>
-//                         </div>
-//                         <p class="text-start">
-//                             ${post.attributes.detail}
-//                         </p>
-//                         <div class="py-4 text-start">
-//                             <a class="inline-flex items-center" href="#">
-//                                 <span class="mr-2">
-//                                     <svg class="fill-rose-600 w-6 h-6" viewBox="0 0 24 24">
-//                                         <path
-//                                             d="M12,21.35L10.55,20.03C5.4,15.36 2,12.27 2,8.5C2,5.41 4.42,3 7.5,3C9.24,3 10.91,3.81 12,5.08C13.09,3.81 14.76,3 16.5,3C19.58,3 22,5.41 22,8.5C22,12.27 18.6,15.36 13.45,20.03L12,21.35Z">
-//                                         </path>
-//                                     </svg>
-//                                 </span>
-//                                 <span class="text-lg font-bold">34</span>
-//                             </a>
-//                             <a class="inline-flex items-center" href="#">
-//                                 <span class="ml-2">
-//                                     <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-//                                         <path
-//                                             d="M123.6 391.3c12.9-9.4 29.6-11.8 44.6-6.4c26.5 9.6 56.2 15.1 87.8 15.1c124.7 0 208-80.5 208-160s-83.3-160-208-160S48 160.5 48 240c0 32 12.4 62.8 35.7 89.2c8.6 9.7 12.8 22.5 11.8 35.5c-1.4 18.1-5.7 34.7-11.3 49.4c17-7.9 31.1-16.7 39.4-22.7zM21.2 431.9c1.8-2.7 3.5-5.4 5.1-8.1c10-16.6 19.5-38.4 21.4-62.9C17.7 326.8 0 285.1 0 240C0 125.1 114.6 32 256 32s256 93.1 256 208s-114.6 208-256 208c-37.1 0-72.3-6.4-104.1-17.9c-11.9 8.7-31.3 20.6-54.3 30.6c-15.1 6.6-32.3 12.6-50.1 16.1c-.8 .2-1.6 .3-2.4 .5c-4.4 .8-8.7 1.5-13.2 1.9c-.2 0-.5 .1-.7 .1c-5.1 .5-10.2 .8-15.3 .8c-6.5 0-12.3-3.9-14.8-9.9c-2.5-6-1.1-12.8 3.4-17.4c4.1-4.2 7.8-8.7 11.3-13.5c1.7-2.3 3.3-4.6 4.8-6.9c.1-.2 .2-.3 .3-.5z" />
-//                                     </svg>
-//                                 </span>
-//                             </a>
-//                             <a class="inline-flex items-center share-icon" href="#" data-post-id="123">
-//                                 <span class="ml-2">
-//                                     <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512">
-//                                         <path
-//                                             d="M16.1 260.2c-22.6 12.9-20.5 47.3 3.6 57.3L160 376V479.3c0 18.1 14.6 32.7 32.7 32.7c9.7 0 18.9-4.3 25.1-11.8l62-74.3 123.9 51.6c18.9 7.9 40.8-4.5 43.9-24.7l64-416c1.9-12.1-3.4-24.3-13.5-31.2s-23.3-7.5-34-1.4l-448 256zm52.1 25.5L409.7 90.6 190.1 336l1.2 1L68.2 285.7zM403.3 425.4L236.7 355.9 450.8 116.6 403.3 425.4z" />
-//                                     </svg>
-//                                 </span>
-//                             </a>
-//                             <a class="inline-flex items-center float-right" href="#">
-//                                 <span class="ml-2">
-//                                     <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" height="16" width="12"
-//                                         viewBox="0 0 384 512">
-//                                         <path
-//                                             d="M0 48C0 21.5 21.5 0 48 0l0 48V441.4l130.1-92.9c8.3-6 19.6-6 27.9 0L336 441.4V48H48V0H336c26.5 0 48 21.5 48 48V488c0 9-5 17.2-13 21.3s-17.6 3.4-24.9-1.8L192 397.5 37.9 507.5c-7.3 5.2-16.9 5.9-24.9 1.8S0 497 0 488V48z" />
-//                                     </svg>
-//                                 </span>
-//                             </a>
-//                         </div>
-
-//                         <div class="relative">
-//                             <input
-//                                 class="pt-2 pb-2 pl-3 w-full h-11 bg-slate-100 rounded-lg placeholder:text-slate-600 font-medium pr-20"
-//                                 type="text" placeholder="Write a comment" />
-//                             <span class="flex absolute right-3 top-2/4 -mt-3 items-center">
-//                                 <svg class="fill-blue-500" style="width: 24px; height: 24px;"
-//                                     viewBox="0 0 24 24">
-//                                     <path d="M2,21L23,12L2,3V10L17,12L2,14V21Z"></path>
-//                                 </svg>
-//                             </span>
-//                         </div>
-
-//                         <!-- Comments content -->
-//                         <div class="comments-section">
-//                           <div class="pt-6" id="commentsContainer_${index}">
-//                           </div>
-//                         </div>
-//                     </div>
-//                           <!-- End comments row -->
-//                           <!-- More comments -->
-
-//                     </article>
-//                     <!-- End Card -->
-//                 </div>
-//             </div>
-//             <!-- End Wrapper-->
-//           </section>
-//             `);
-//         // console.log(post.attributes.comments.data.length)
-//         // console.log(post.attributes.comments)
-
-//         //Load comments
-//         if (
-//           post.attributes.comments &&
-//           post.attributes.comments.data.length > 0
-//         ) {
-//           $.each(
-//             post.attributes.comments.data,
-//             function (commentIndex, comment) {
-//               //console.log(comment.attributes.comment)
-//               let commentPf = `<img class="rounded-full max-w-none w-10 h-10 object-cover"
-//                 src="https://cms.istad.co${comment.attributes.user.data.attributes.profile.data.attributes.url}" />`;
-//               let commentContent = `<p>${comment.attributes.comment}</p>`;
-//               let commentDate = `${formatDate(comment.attributes.publishedAt)}`;
-//               let commentUsername = `<a class="inline-block text-base font-bold mr-2" href="/src/pages/details.html?id=${comment.attributes.user.data.id}">${comment.attributes.user.data.attributes.username}</a>`;
-
-//               // Append each comment to the postContainer
-//               postContainer.find(`#commentsContainer_${index}`).append(`
-//                 <!-- Comment row -->
-//                 <div class="media flex pb-4">
-//                     <a class="mr-4" href="/src/pages/details.html?id=${comment.attributes.user.data.id}">
-//                       ${commentPf}
-//                     </a>
-//                     <div class="media-body text-start">
-//                         <div>
-//                             ${commentUsername}
-//                             <span class="text-slate-500">${commentDate}</span>
-//                         </div>
-//                         ${commentContent}
-//                         <div class="mt-2 flex items-center">
-//                             <a class="inline-flex items-center py-2 mr-3" href="#">
-//                                 <span class="mr-2">
-//                                     <svg class="fill-rose-600" style="width: 22px; height: 22px;"
-//                                         viewBox="0 0 24 24">
-//                                         <path
-//                                             d="M12,21.35L10.55,20.03C5.4,15.36 2,12.27 2,8.5C2,5.41 4.42,3 7.5,3C9.24,3 10.91,3.81 12,5.08C13.09,3.81 14.76,3 16.5,3C19.58,3 22,5.41 22,8.5C22,12.27 18.6,15.36 13.45,20.03L12,21.35Z">
-//                                         </path>
-//                                     </svg>
-//                                 </span>
-//                                 <span class="text-base font-bold">0</span>
-//                             </a>
-//                             <button class="py-2 px-4 font-medium hover:bg-slate-50 rounded-lg">
-//                                 Reply
-//                             </button>
-//                         </div>
-//                     </div>
-//                 `);
-//             }
-//           );
-//         }
-
-//         //append post and the comment part together
-//         $('.post').append(postContainer);
-//       });
-//     },
-//     error: function (error) {
-//       console.error('Error fetching stories:', error);
-//     },
-//   });
-// });
 
 function formatDate(dateString) {
   const date = new Date(dateString);
@@ -796,12 +612,14 @@ $(document).ready(function () {
             // Construct the user element HTML
             var userElement = `
                 <div class="flex justify-between w-full">
+                  <a href="/src/pages/details.html?id=${user.id}">
                     <div class="flex gap-4">
                         <img class="h-10 w-10 rounded-full"
                             src="${profileImageUrl}"
                             alt="" />
                         <p class="text-start font-bold pt-2">${user.username}</p>
                     </div>
+                  </a>
                     <button class="h-10 w-24 bg-blue-600 rounded-lg text-white follow-button" data-user-id="${user.id}">
                         Follow
                     </button>
@@ -846,12 +664,14 @@ $(document).ready(function () {
 
                   var userElement = `
                     <div class="flex justify-between w-full">
-                      <div class="flex gap-4">
-                        <img class="h-10 w-10 rounded-full"
-                          src="${profileImageUrl}"
-                          alt="" />
-                        <p class="text-start font-bold pt-2">${user.username}</p>
-                      </div>
+                      <a href="/src/pages/details.html?id=${user.id}">
+                        <div class="flex gap-4">
+                          <img class="h-10 w-10 rounded-full"
+                            src="${profileImageUrl}"
+                            alt="" />
+                          <p class="text-start font-bold pt-2">${user.username}</p>
+                        </div>
+                      </a>
                       <button class="h-10 w-24 bg-blue-600 rounded-lg text-white follow-button" data-user-id="${user.id}">
                         Follow
                       </button>

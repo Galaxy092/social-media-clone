@@ -59,12 +59,14 @@
    ```sh
    npm start
    ```
-   
+
+### Local Development
+
 Open [http://localhost:5500/src/pages/home.html](http://localhost:5500/src/pages/home.html) with your browser to see the result.
 
 ### Deployment
 
-Deployment: #
+Deployment: https://social-kh.vercel.app/src/pages/home.html
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -75,23 +77,10 @@ Deployment: #
 
 ## Global Pages (Not sign in)
 
-01. [Home](https://k-quicksight-4gmo.vercel.app/) : /
-02. [Sign in](https://k-quicksight-4gmo.vercel.app/auth/login) : /auth/login
-03. [Sign up](https://k-quicksight-4gmo.vercel.app/auth/signup) : /auth/sign up
-04. [Search](https://k-quicksight-4gmo.vercel.app/search) : /search
-05. [Friends](https://k-quicksight-4gmo.vercel.app/friends) : /friends
-6. [Profile](https://k-quicksight-4gmo.vercel.app/profile) : /profile
-7. [Create](https://k-quicksight-4gmo.vercel.app/create) : /create
-8. [Friends](https://k-quicksight-4gmo.vercel.app/friends) : /friends
-9. [About Us](https://k-quicksight-4gmo.vercel.app/about-us) : /about-us
-10. [Setting](https://k-quicksight-4gmo.vercel.app/setting) : /setting
-
-## User board Pages (Signed in)
-
-1. [Profile](https://k-quicksight-4gmo.vercel.app/profile) : /profile
-2. [All Dataset](https://k-quicksight-4gmo.vercel.app/board/dataset) : /board/dataset
-3. [Dataset Detail, Cleansing, Overview, Share dataset](https://k-quicksight-4gmo.vercel.app/board/dataset/${data-set-uuid}) : /board/dataset/${data-set-uuid}
-4. [Shared Files](https://k-quicksight-4gmo.vercel.app/board/shareWithMe) : /board/shareWithMe
-5. [Analysis](https://k-quicksight-4gmo.vercel.app/board/analysis) : /board/analysis
-6. [Dashboard](https://k-quicksight-4gmo.vercel.app/board/dashboard) : /board/dashboard
-
+01. [Home](https://social-kh.vercel.app/src/pages/home.html) : /src/pages/home
+02. [Sign in](https://social-kh.vercel.app/src/pages/login.html) : /src/pages/login
+03. [Sign up](https://social-kh.vercel.app/src/pages/register.html) : src/pages/register
+4. [Profile](https://social-kh.vercel.app/src/pages/profile.html) : src/pages/profile
+5. [Friends](https://social-kh.vercel.app/src/pages/friend.html) : src/pages/friends
+6. [About Us](https://social-kh.vercel.app/src/pages/aboutus.html) : /src/pages/aboutus
+7. [Setting](https://social-kh.vercel.app/src/pages/setting.html) : /src/pages/setting

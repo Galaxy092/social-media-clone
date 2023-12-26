@@ -18,7 +18,7 @@
     <!-- Include Toastr library -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
     <link rel="stylesheet" href="../../css/story.css">
-    <title>Home - Social Kh</title>
+    <title>Story - Social Kh</title>
 </head>
 
 <body>
@@ -43,7 +43,7 @@
                         <ul class="space-y-2 font-medium flex flex-col w-fit">
                             <li>
                                 <a href="/src/pages/home.html"
-                                    class="flex items-center py-2 px-10 text-gray-900 rounded-lg bg-gray-100 group">
+                                    class="flex items-center py-2 px-10 text-gray-900 rounded-lg hover:bg-gray-100 group">
                                     <img src="../../img/Home.svg" alt="Home" />
                                     <span class="ml-9 sm:hidden md:block">Home</span>
                                 </a>
@@ -57,14 +57,14 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="/src/pages/friend.html"
+                                <a id="friendsLink" href="#"
                                     class="flex items-center py-2 px-10 text-gray-900 rounded-lg hover:bg-gray-100 group">
                                     <img src="../../img/Friends.svg" alt="Friends" />
                                     <span class="ml-9 whitespace-nowrap">Friends</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="/src/pages/profile.html"
+                                <a id="profileLink1" href="#"
                                     class="flex items-center py-2 px-10 text-gray-900 rounded-lg hover:bg-gray-100 group">
                                     <img src="../../img/Profile.svg" alt="Profile" />
                                     <span class="ml-9 whitespace-nowrap">Profile</span>
@@ -103,7 +103,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="/src/pages/setting.html"
+                                <a id="settingLink" href="#"
                                     class="flex items-center py-2 px-10 text-gray-900 rounded-lg hover:bg-gray-100 group">
                                     <img src="../../img/Setting.svg" alt="Setting" />
                                     <span class="ml-9 whitespace-nowrap">Setting</span>
@@ -111,10 +111,10 @@
                             </li>
                             <div class="bg-white h-32"></div>
                             <li>
-                                <a href="javascript:void(0);" onclick="logout()"
+                                <a href="javascript:void(0);" onclick="handleButtonClick()"
                                     class="flex items-center py-2 px-10 text-gray-900 rounded-lg hover:bg-gray-100 group">
                                     <img src="../../img/Logout.svg" alt="Setting" class="w-6 h-6">
-                                    <span class="ml-9 whitespace-nowrap">Logout</span>
+                                    <span class="ml-9 whitespace-nowrap" id="logoutText">Logout</span>
                                 </a>
                             </li>
                         </ul>
@@ -274,14 +274,6 @@
 
         <!-- content -->
         <main class="min-h-screen lg:w-3/5 md:w-9/10 sm:w-9/10 p-4 text-xl bg-gray-200">
-            <section class="max-w-7xl mx-auto py-4 sm:hidden">
-                <div class="flex items-center overflow-x-auto no-scrollbar md:hidden lg:hidden">
-                    <div class="flex space-x-4 md:hidden lg:hidden" id="categoryButtons">
-                        <!-- Buttons will be dynamically added here -->
-                    </div>
-                </div>
-            </section>
-
             <section class="">
                 <div class="flex overflow-x-auto justify-center space-x-8 w-auto no-scrollbar">
                     <!-- Render All Stories -->
@@ -307,15 +299,14 @@
         </main>
 
         <!-- right side-bar -->
-        <!-- right side-bar -->
-        <aside class="lg:w-1/5 md:hidden sm:hidden hidden lg:block my-4 min-h-full right-0">
+        <aside class="lg:w-1/5 md:hidden sm:hidden hidden lg:block min-h-full right-0 bg-gray-200">
             <div class="sticky top-0 flex gap-y-4 flex-col">
                 <!-- top section -->
                 <section class="h-fit w-full bg-white rounded-lg">
                     <div class="m-4 flex flex-wrap gap-y-8">
                         <div class="flex justify-between w-full">
                             <div class="flex gap-4">
-                                <a href="/src/pages/profile.html">
+                                <div id="profileLink">
                                     <div class="flex gap-4">
                                         <img class="h-10 w-10 rounded-full mt-2" id="profileImage" src="" alt="" />
                                         <div class="flex flex-wrap">
@@ -324,7 +315,7 @@
                                         </div>
                                         <img src="/img/Arrow.svg" alt="" />
                                     </div>
-                                </a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -336,54 +327,8 @@
                         SUGGESTION
                     </p>
 
-                    <div class="mx-4 flex flex-wrap gap-y-8">
-                        <div class="flex justify-between w-full">
-                            <div class="flex gap-4">
-                                <img class="h-10 w-10 rounded-full"
-                                    src="https://i.pinimg.com/564x/6a/3b/71/6a3b71ee91470b4cb08334ed0c4e869d.jpg"
-                                    alt="" />
-                                <p class="text-start font-bold pt-2">Chan Chhaya</p>
-                            </div>
-                            <button class="h-10 w-24 bg-blue-600 rounded-lg text-white">
-                                Follow
-                            </button>
-                        </div>
-
-                        <div class="flex justify-between w-full">
-                            <div class="flex gap-4">
-                                <img class="h-10 w-10 rounded-full"
-                                    src="https://i.pinimg.com/564x/e4/a1/e8/e4a1e8e0207686153a54260a684e7201.jpg"
-                                    alt="" />
-                                <p class="text-start font-bold pt-2">Sang Sokea</p>
-                            </div>
-                            <button class="h-10 w-24 bg-blue-600 rounded-lg text-white">
-                                Follow
-                            </button>
-                        </div>
-
-                        <div class="flex justify-between w-full">
-                            <div class="flex gap-4">
-                                <img class="h-10 w-10 rounded-full"
-                                    src="https://i.pinimg.com/564x/df/28/82/df2882db9876cf9f7fc6c49462c8ac47.jpg"
-                                    alt="" />
-                                <p class="text-start font-bold pt-2">Kit Tara</p>
-                            </div>
-                            <button class="h-10 w-24 bg-blue-600 rounded-lg text-white">
-                                Follow
-                            </button>
-                        </div>
-
-                        <div class="flex justify-between w-full">
-                            <div class="flex gap-4">
-                                <img class="h-10 w-10 rounded-full"
-                                    src="https://i.pinimg.com/564x/99/97/78/999778d42e7fcd564701747d37b3e39d.jpg"
-                                    alt="" />
-                                <p class="text-start font-bold pt-2">Reaksmey</p>
-                            </div>
-                            <button class="h-10 w-24 bg-blue-600 rounded-lg text-white">
-                                Follow
-                            </button>
-                        </div>
+                    <div class="mx-4 flex flex-wrap gap-y-8" id="userListContainer">
+                        
                     </div>
                 </section>
 

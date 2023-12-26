@@ -47,6 +47,80 @@ if (responseJwt) {
   });
 }
 
+document.addEventListener('DOMContentLoaded', function () {
+  updateButtonBasedOnLocalStorage();
+
+  // Check if the user has an "id" in localStorage
+  const userId = localStorage.getItem('id');
+
+  // Get the friends link element
+  const friendsLink = document.getElementById('friendsLink');
+  const profileLink = document.getElementById('profileLink1');
+  const settingLink = document.getElementById('settingLink');
+
+  // Update the href attribute based on the presence of "id"
+  if (userId) {
+    friendsLink.href = '/src/pages/friend.html';
+    profileLink.href = '/src/pages/profile.html';
+    settingLink.href = '/src/pages/setting.html';
+  } else {
+    // If no "id" is present, handle it with Toastr
+    friendsLink.addEventListener('click', function (event) {
+      event.preventDefault();
+      toastr.warning('You need to be logged in to access Friends Page!');
+      // You can redirect to a login page or perform any other action
+    });
+    // If no "id" is present, handle it with Toastr
+    profileLink.addEventListener('click', function (event) {
+      event.preventDefault();
+      toastr.warning('You need to be logged in to access Profile Page!');
+      // You can redirect to a login page or perform any other action
+    });
+    // If no "id" is present, handle it with Toastr
+    settingLink.addEventListener('click', function (event) {
+      event.preventDefault();
+      toastr.warning('You need to be logged in to access Setting Page!');
+      // You can redirect to a login page or perform any other action
+    });
+  }
+});
+
+function handleButtonClick() {
+  // Check if the user has an ID in local storage
+  if (localStorage.getItem('id')) {
+    // User is logged in, perform logout
+    logout();
+  } else {
+    // User is not logged in, perform login
+    // Add your login logic here
+    window.location.href = '/src/pages/login.html';
+  }
+}
+
+function updateButtonBasedOnLocalStorage() {
+  const logoutText = document.getElementById('logoutText');
+
+  // Check if the user has an ID in local storage
+  if (localStorage.getItem('id')) {
+    // User is logged in, update button text
+    logoutText.innerText = 'Logout';
+  } else {
+    // User is not logged in, update button text
+    logoutText.innerText = 'Login';
+  }
+}
+
+function logout() {
+  // Implement your logout logic here
+  // For example, clear user ID from local storage
+  localStorage.clear();
+
+  // Update the button text after logout
+  updateButtonBasedOnLocalStorage();
+
+  window.location.href = '/src/pages/login.html';
+}
+
 $(document).ready(function () {
   // Fetch post from the API
   $.ajax({
