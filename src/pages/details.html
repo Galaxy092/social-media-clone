@@ -33,7 +33,7 @@
                 <aside id="default-sidebar"
                     class="mt-8 fixed top-0 left-0 z-40 sm:w-[1rem] md:w-[2rem] lg:w-[13rem] xl:w-[18rem] h-screen transition-transform -translate-x-full sm:translate-x-0"
                     aria-label="Sidebar">
-                    <div class="h-full px-3 py-4 overflow-y-auto bg-primary">
+                    <div class="h-full px-3 py-4 overflow-y-auto bg-primary hidden sm:hidden md:hidden lg:block">
                         <a href="/src/pages/home.html" class="flex items-center mb-10">
                             <div class="flex justify-center items-center mx-auto">
                                 <img src="../../img/cropped-confluence.png" class="h-10 me-3 sm:h-3 md:h-10"
@@ -58,14 +58,14 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="/src/pages/friend.html"
+                                <a id="friendsLink" href="#"
                                     class="flex items-center py-2 px-10 text-gray-900 rounded-lg hover:bg-gray-100 group">
                                     <img src="../../img/Friends.svg" alt="Friends">
                                     <span class="ml-9 whitespace-nowrap">Friends</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="/src/pages/profile.html"
+                                <a id="profileLink1" href="#"
                                     class="flex items-center py-2 px-10 text-gray-900 rounded-lg hover:bg-gray-100 group">
                                     <img src="../../img/Profile.svg" alt="Profile">
                                     <span class="ml-9 whitespace-nowrap">Profile</span>
@@ -86,7 +86,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="/src/pages/setting.html"
+                                <a id="settingLink" href="#"
                                     class="flex items-center py-2 px-10 text-gray-900 rounded-lg hover:bg-gray-100 group">
                                     <img src="../../img/Setting.svg" alt="Setting">
                                     <span class="ml-9 whitespace-nowrap">Setting</span>
@@ -94,15 +94,130 @@
                             </li>
                             <div class="bg-white h-32"></div>
                             <li>
-                                <a href="javascript:void(0);" onclick="logout()"
+                                <a href="javascript:void(0);" onclick="handleButtonClick()"
                                     class="flex items-center py-2 px-10 text-gray-900 rounded-lg hover:bg-gray-100 group">
                                     <img src="../../img/Logout.svg" alt="Setting">
-                                    <span class="ml-9 whitespace-nowrap">Logout</span>
+                                    <span class="ml-9 whitespace-nowrap" id="logoutText">Logout</span>
                                 </a>
                             </li>
                         </ul>
                     </div>
                 </aside>
+            </div>
+            <div class="flex h-screen w-16 flex-col justify-between sticky top-0 lg:hidden">
+                <div>
+                    <div class="inline-flex h-16 w-16 items-center justify-center">
+                        <a href="/src/pages/home.html" class="flex items-center mb-10">
+                            <div class="flex justify-center items-center mx-auto">
+                                <img src="../../img/cropped-confluence.png" class="h-10 sm:h-10 md:h-10"
+                                    alt="Social Kh" />
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="border-t border-gray-100">
+                        <div class="px-2">
+                            <div class="py-4">
+                            </div>
+
+                            <ul class="space-y-2 font-medium pt-4">
+                                <li>
+                                    <a href="/src/pages/home.html"
+                                        class="t group relative flex justify-center rounded hover:bg-gray-100 px-2 py-1.5 text-blue-700">
+                                        <img src="../../img/Home.svg" alt="Home">
+
+                                        <span
+                                            class="absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-xs font-medium text-white opacity-0 group-hover:opacity-100">
+                                            Home
+                                        </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" data-modal-target="authentication-modal"
+                                        data-modal-toggle="authentication-modal"
+                                        class="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-100 hover:text-gray-700">
+                                        <img src="../../img/Search.svg" alt="Search">
+
+                                        <span
+                                            class="absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-xs font-medium text-white opacity-0 group-hover:opacity-100">
+                                            Search
+                                        </span>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="/src/pages/friend.html"
+                                        class="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-100 hover:text-gray-700">
+                                        <img src="../../img/Friends.svg" alt="Friends">
+
+                                        <span
+                                            class="absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-xs font-medium text-white opacity-0 group-hover:opacity-100">
+                                            Friend
+                                        </span>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="/src/pages/profile.html"
+                                        class="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-100 hover:text-gray-700">
+                                        <img src="../../img/Profile.svg" alt="Profile">
+
+                                        <span
+                                            class="absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-xs font-medium text-white opacity-0 group-hover:opacity-100">
+                                            Profile
+                                        </span>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#" data-modal-target="medium-modal" data-modal-toggle="medium-modal"
+                                        class="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-100 hover:text-gray-700">
+                                        <img src="../../img/Create.svg" alt="Create">
+
+                                        <span
+                                            class="absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-xs font-medium text-white opacity-0 group-hover:opacity-100">
+                                            Create
+                                        </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/src/pages/aboutus.html"
+                                        class="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-100 hover:text-gray-700">
+                                        <img src="../../img/About Us.svg" alt="About Us">
+
+                                        <span
+                                            class="absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-xs font-medium text-white opacity-0 group-hover:opacity-100">
+                                            About Us
+                                        </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/src/pages/setting.html"
+                                        class="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-100 hover:text-gray-700">
+                                        <img src="../../img/Setting.svg" alt="Setting">
+
+                                        <span
+                                            class="absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-xs font-medium text-white opacity-0 group-hover:opacity-100">
+                                            Setting
+                                        </span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sticky inset-x-0 bottom-0 border-t border-gray-100 bg-white p-2">
+                    <button type="submit" onclick="logout()"
+                        class="group relative flex w-full justify-center rounded-lg px-2 py-1.5 text-sm text-gray-500 hover:bg-gray-100 hover:text-gray-700">
+                        <img src="../../img/Logout.svg" alt="Logout">
+
+                        <span
+                            class="absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-xs font-medium text-white opacity-0 group-hover:opacity-100">
+                            Logout
+                        </span>
+                    </button>
+                </div>
             </div>
         </aside>
 
@@ -358,46 +473,8 @@
                         SUGGESTION
                     </p>
 
-                    <div class="mx-4 flex flex-wrap gap-y-8">
-                        <div class="flex justify-between w-full">
-                            <div class="flex gap-4">
-                                <img class="h-10 w-10 rounded-full"
-                                    src="https://i.pinimg.com/564x/6a/3b/71/6a3b71ee91470b4cb08334ed0c4e869d.jpg"
-                                    alt="">
-                                <p class="text-start font-bold pt-2">Chan Chhaya</p>
-                            </div>
-                            <button class="h-10 w-24 bg-blue-600 rounded-lg text-white">Follow</button>
-                        </div>
+                    <div class="mx-4 flex flex-wrap gap-y-8" id="userListContainer">
 
-                        <div class="flex justify-between w-full">
-                            <div class="flex gap-4">
-                                <img class="h-10 w-10 rounded-full"
-                                    src="https://i.pinimg.com/564x/e4/a1/e8/e4a1e8e0207686153a54260a684e7201.jpg"
-                                    alt="">
-                                <p class="text-start font-bold pt-2">Sang Sokea</p>
-                            </div>
-                            <button class="h-10 w-24 bg-blue-600 rounded-lg text-white">Follow</button>
-                        </div>
-
-                        <div class="flex justify-between w-full">
-                            <div class="flex gap-4">
-                                <img class="h-10 w-10 rounded-full"
-                                    src="https://i.pinimg.com/564x/df/28/82/df2882db9876cf9f7fc6c49462c8ac47.jpg"
-                                    alt="">
-                                <p class="text-start font-bold pt-2">Kit Tara</p>
-                            </div>
-                            <button class="h-10 w-24 bg-blue-600 rounded-lg text-white">Follow</button>
-                        </div>
-
-                        <div class="flex justify-between w-full">
-                            <div class="flex gap-4">
-                                <img class="h-10 w-10 rounded-full"
-                                    src="https://i.pinimg.com/564x/99/97/78/999778d42e7fcd564701747d37b3e39d.jpg"
-                                    alt="">
-                                <p class="text-start font-bold pt-2">Reaksmey</p>
-                            </div>
-                            <button class="h-10 w-24 bg-blue-600 rounded-lg text-white">Follow</button>
-                        </div>
                     </div>
                 </section>
 
