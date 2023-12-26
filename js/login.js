@@ -42,6 +42,18 @@ $(document).ready(function () {
     togglePasswordButton.text(buttonText);
   });
 });
+
+// Bind the keypress event to the document
+$(document).keypress(function (e) {
+  // Check if the pressed key is Enter (key code 13)
+  if (e.which === 13) {
+    // Prevent the default form submission behavior
+    e.preventDefault();
+    // Call the submitForm function
+    submitForm();
+  }
+});
+
 function submitForm() {
   // Get input values
   var username = $('#username').val();
