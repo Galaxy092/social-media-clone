@@ -114,6 +114,7 @@ function logout() {
   // Implement your logout logic here
   // For example, clear user ID from local storage
   localStorage.clear();
+  sessionStorage.clear();
 
   // Update the button text after logout
   updateButtonBasedOnLocalStorage();
