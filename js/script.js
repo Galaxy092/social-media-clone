@@ -117,19 +117,19 @@ function updateButtonBasedOnLocalStorage() {
     logoutText.innerText = 'Logout';
     $('#logo').attr(
       'src',
-      '/img/logout.svg');
+      '../../img/logout.svg');
     $('#logores').attr(
       'src',
-      '/img/logout.svg');
+      '../../img/logout.svg');
   } else {
     // User is not logged in, update button text
     logoutText.innerText = 'Login';
     $('#logo').attr(
       'src',
-      '/img/login.svg');
+      '../../img/login.svg');
     $('#logores').attr(
       'src',
-      '/img/login.svg');
+      '../../img/login.svg');
   }
 }
 
