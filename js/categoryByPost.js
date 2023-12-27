@@ -451,7 +451,7 @@ $(document).ready(function () {
             function (commentIndex, comment) {
               //console.log(comment.attributes.comment)
               let commentPf = `<img class="rounded-full max-w-none w-10 h-10 object-cover"
-                src="https://cms.istad.co${comment.attributes.user.data.attributes.profile.data.attributes.url}" />`;
+                src="https://cms.istad.co${comment?.attributes.user.data.attributes.profile.data.attributes.url}" />`;
               let commentContent = `<p>${comment.attributes.comment}</p>`;
               let commentDate = `${formatDate(comment.attributes.publishedAt)}`;
               let commentUsername = `<a class="inline-block text-base font-bold mr-2" href="/src/pages/details.html?id=${comment.attributes.user.data.id}">${comment.attributes.user.data.attributes.username}</a>`;

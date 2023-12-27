@@ -33,7 +33,7 @@ if (responseJwt) {
   });
 } else {
   // User is not authenticated, render guest image
-  $('#profilePic').attr('src', 'https://placehold.co/600x400');
+  $('#profilePic').attr('src', 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png');
   $('#userName').text('Guest User');
   $('#userGmail').text('No email available');
 

@@ -14,13 +14,35 @@ if (responseJwt) {
     success: function (userBio) {
       // Display User Info
       // Update the DOM with the fetched data
-      $('#profilePic').attr(
-        'src',
-        'https://cms.istad.co' + userBio.profile.url ||
+      if (userBio.profile && userBio.profile.url) {
+        // If a profile picture exists, set the image source to the URL
+        $('#profilePic').attr(
+          'src',
+          'https://cms.istad.co' + userBio.profile.url ||
+            'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'
+        );
+        $('#profileImage').attr(
+          'src',
+          'https://cms.istad.co' + userBio.profile.url ||
+            'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'
+        );
+        $('#userName').text(userBio.username || 'Unknown User');
+        $('#userGmail').text(userBio.email || 'No email available');
+        $('#profileBio').text(userBio.bio || 'No bio available');
+      } else {
+        // If no profile picture exists, set a default image
+        $('#profileImage').attr(
+          'src',
           'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'
-      );
-      $('#userName').text(userBio.username || 'Unknown User');
-      $('#userGmail').text(userBio.email || 'No email available');
+        );
+        $('#profilePic').attr(
+          'src',
+          'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'
+        );
+        $('#userName').text(userBio.username || 'Unknown User');
+        $('#profileUsername').text(userBio.username || 'Unknown User');
+        $('#userGmail').text(userBio.email || 'No email available');
+      }
 
       // Redirect to profile page when clicking on the user profile
       $('#profileLink').on('click', function () {

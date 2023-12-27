@@ -15,18 +15,43 @@ $.ajax({
     // Check if the user has a profile picture
     if (userBio.profile && userBio.profile.url) {
       // If a profile picture exists, set the image source to the URL
-      $('#profileImage').attr(
+      $('#profilePic').attr(
         'src',
-        'https://cms.istad.co' + userBio.profile.url
+        'https://cms.istad.co' + userBio.profile.url ||
+          'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'
       );
     } else {
       // If no profile picture exists, set a default image
-      $('#profileImage').attr('src', 'https://placehold.co/600x400');
+      $('#profileImage').attr(
+        'src',
+        'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'
+      );
+      $('#profilePic').attr(
+        'src',
+        'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'
+      );
+      $('#userName').text(userBio.username || 'Unknown User');
+      $('#profileUsername').text(userBio.username || 'Unknown User');
+      $('#userGmail').text(userBio.email || 'No email available');
+      $('#profileBio').text(userBio.bio || 'No bio available');
+      $('#profileLocation').text(userBio.location || 'No User Location');
+      $('#profileEducation').text(userBio.education || 'No User Education');
+      $('#profileWorkplace').text(
+        userBio.workplace || 'No workplace available'
+      );
+      $('#profileRelationshipStatus').text(
+        userBio.relationshipStatus || 'No relationship status available'
+      );
     }
     $('#profilePic').attr(
       'src',
       'https://cms.istad.co' + userBio.profile.url,
-      'default-profile-image.jpg'
+      'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'
+    );
+    $('#profileImage').attr(
+      'src',
+      'https://cms.istad.co' + userBio.profile.url,
+      'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'
     );
     $('#userName').text(userBio.username || 'Unknown User');
     $('#profileUsername').text(userBio.username || 'Unknown User');
@@ -38,6 +63,7 @@ $.ajax({
     $('#profileRelationshipStatus').text(
       userBio.relationshipStatus || 'No relationship status available'
     );
+    
   },
   error: function (error) {
     console.error('Error fetching user bio:', error);
@@ -514,9 +540,7 @@ function copyToClipboard(text) {
   const baseUrl = 'https://social-kh.vercel.app'; // Replace with your actual production URL
   const tempInput = $('<input>');
   $('body').append(tempInput);
-  tempInput
-    .val(`${baseUrl}/src/pages/post.html?id=${text}`)
-    .select();
+  tempInput.val(`${baseUrl}/src/pages/post.html?id=${text}`).select();
   document.execCommand('copy');
   tempInput.remove();
 }
@@ -671,12 +695,12 @@ $(document).ready(function () {
 
             for (var i = 0; i < data.length; i++) {
               var user = data[i];
-            
+
               if (user.id !== loggedInUserId && !isUserFollowed(user.id)) {
                 var profileImageUrl = user?.profile?.url
                   ? `https://cms.istad.co${user.profile.url}`
                   : 'https://th.bing.com/th/id/R.9e54d586089212511aa923ae02f62377?rik=yXRlJomMslCU3w&riu=http%3a%2f%2fischedule.md%2fimages%2favatar_2x.png&ehk=19LHXczqEXK4%2bzVWH94JcVc6WFf%2bBK4bzQ2Jw1beDGo%3d&risl=&pid=ImgRaw&r=0';
-            
+
                 var userElement = `
                   <div class="flex justify-between w-full">
                     <div class="flex gap-4">
@@ -690,9 +714,9 @@ $(document).ready(function () {
                     </button>
                   </div>
                 `;
-            
+
                 $('#userListContainer').append(userElement);
-            
+
                 // Break out of the loop after appending 5 users
                 if ($('#userListContainer').children().length >= 5) {
                   break;

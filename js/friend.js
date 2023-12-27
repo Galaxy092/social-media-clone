@@ -8,7 +8,7 @@ if (!userId) {
 
 // Get User Bio
 const responseJwt = localStorage.getItem('token');
-$(document).ready(function() {
+$(document).ready(function () {
   const container = $('#friend-list-container');
 
   $.ajax({
@@ -18,19 +18,20 @@ $(document).ready(function() {
       Authorization: 'Bearer ' + responseJwt,
     },
     success: function (userBio) {
-  
       if (userBio && userBio.users) {
         // Clear existing content in the container
         container.empty();
-
-        
 
         // Loop through the friend list and create cards
         userBio.users.forEach((user) => {
           const card = `
             <div>
               <a href="/src/pages/details.html?id=${user.id}">
-              <img src="${user?.profile?.url ? `https://cms.istad.co${user?.profile?.url}` : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'}" class="user-image lg:w-[220px] lg:h-[240px] md:w-[220px] md:h-[240px] sm:w-[180px] sm:h-[200px] rounded-lg" alt="User Image">
+              <img src="${
+                user?.profile?.url
+                  ? `https://cms.istad.co${user?.profile?.url}`
+                  : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'
+              }" class="user-image lg:w-[220px] lg:h-[240px] md:w-[220px] md:h-[240px] sm:w-[180px] sm:h-[200px] rounded-lg" alt="User Image">
               <p class="user-username text-left">${user.username}</p>
               </a>
             </div>
@@ -43,28 +44,43 @@ $(document).ready(function() {
 
       // Display User Info
       // Update the DOM with the fetched data
-      $('#profileImage').attr(
-        'src',
-        'https://cms.istad.co' + userBio.profile.url ||
-          'default-profile-image.jpg'
-      );
-      $('#profilePic').attr(
-        'src',
-        'https://cms.istad.co' + userBio.profile.url ||
-          'default-profile-image.jpg'
-      );
-      $('#userName').text(userBio.username || 'Unknown User');
-      $('#profileUsername').text(userBio.username || 'Unknown User');
-      $('#userGmail').text(userBio.email || 'No email available');
-      $('#profileBio').text(userBio.bio || 'No bio available');
-  
-  
+      if (userBio.profile && userBio.profile.url) {
+        // If a profile picture exists, set the image source to the URL
+        $('#profilePic').attr(
+          'src',
+          'https://cms.istad.co' + userBio.profile.url ||
+            'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'
+        );
+        $('#profileImage').attr(
+          'src',
+          'https://cms.istad.co' + userBio.profile.url ||
+            'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'
+        );
+        $('#userName').text(userBio.username || 'Unknown User');
+        $('#profileUsername').text(userBio.username || 'Unknown User');
+        $('#userGmail').text(userBio.email || 'No email available');
+        $('#profileBio').text(userBio.bio || 'No bio available');
+      } else {
+        // If no profile picture exists, set a default image
+        $('#profileImage').attr(
+          'src',
+          'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'
+        );
+        $('#profilePic').attr(
+          'src',
+          'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'
+        );
+        $('#userName').text(userBio.username || 'Unknown User');
+        $('#profileUsername').text(userBio.username || 'Unknown User');
+        $('#userGmail').text(userBio.email || 'No email available');
+        $('#profileBio').text(userBio.bio || 'No bio available');
+      }
     },
     error: function (error) {
       console.error('Error fetching user bio:', error);
     },
   });
-})
+});
 
 function logout() {
   // Clear local storage
@@ -140,28 +156,30 @@ $(document).ready(function () {
 
             for (var i = 0; i < data.length; i++) {
               var user = data[i];
-            
+
               if (user.id !== loggedInUserId && !isUserFollowed(user.id)) {
                 var profileImageUrl = user?.profile?.url
                   ? `https://cms.istad.co${user.profile.url}`
                   : 'https://th.bing.com/th/id/R.9e54d586089212511aa923ae02f62377?rik=yXRlJomMslCU3w&riu=http%3a%2f%2fischedule.md%2fimages%2favatar_2x.png&ehk=19LHXczqEXK4%2bzVWH94JcVc6WFf%2bBK4bzQ2Jw1beDGo%3d&risl=&pid=ImgRaw&r=0';
-            
+
                 var userElement = `
                   <div class="flex justify-between w-full">
-                    <div class="flex gap-4">
-                      <img class="h-10 w-10 rounded-full"
-                        src="${profileImageUrl}"
-                        alt="" />
-                      <p class="text-start font-bold pt-2">${user.username}</p>
-                    </div>
+                    <a href="/src/pages/details.html?id=${user.id}">
+                      <div class="flex gap-4">
+                        <img class="h-10 w-10 rounded-full"
+                          src="${profileImageUrl}"
+                          alt="" />
+                        <p class="text-start font-bold pt-2">${user.username}</p>
+                      </div>
+                    </a>
                     <button class="h-10 w-24 bg-blue-600 rounded-lg text-white follow-button" data-user-id="${user.id}">
                       Follow
                     </button>
                   </div>
                 `;
-            
+
                 $('#userListContainer').append(userElement);
-            
+
                 // Break out of the loop after appending 5 users
                 if ($('#userListContainer').children().length >= 5) {
                   break;
