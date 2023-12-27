@@ -213,6 +213,7 @@ $(document).ready(function () {
                   contentType: 'application/json',
                   success: function (response) {
                     console.log('Successfully followed user:', response);
+                    location.reload();
 
                     // You can update the UI to reflect the follow status if needed
 
