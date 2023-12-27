@@ -291,8 +291,10 @@ $(document).ready(function () {
     method: 'GET',
     dataType: 'json',
     success: function (data) {
+      // Sort posts by createdAt in descending order
+      const sortedPosts = data.data.sort((a, b) => new Date(b.attributes.createdAt) - new Date(a.attributes.createdAt));
       // Iterate through each story in the response
-      $.each(data.data, function (index, post) {
+      $.each(sortedPosts, function (index, post) {
         // Function to handle sharing the post
         window.sharePost = function (postId) {
           // Get the post ID and copy to clipboard
@@ -303,7 +305,7 @@ $(document).ready(function () {
           toastr.success('Copied to clipboard!');
         };
       });
-      $.each(data.data, function (index, post) {
+      $.each(sortedPosts, function (index, post) {
         let postId = post.id;
         const postContainer = $('.post').append(`
             <!-- Wrapper-->
