@@ -501,13 +501,6 @@ function updatePostSection(categoryId) {
           let userId = localStorage.getItem('id');
           let commentText = $(`.comment-input_${index}`).val();
 
-          console.log(
-            'Clicked on comment input for postId:',
-            postId,
-            userId,
-            commentText
-          );
-
           $(document).ready(function () {
             if(!userId) {
               // User is not logged in, show toastr message

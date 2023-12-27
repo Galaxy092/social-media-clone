@@ -253,7 +253,12 @@ $(document).ready(function () {
             </div>
           `);
           if (post.comments && post.comments.length > 0) {
-            $.each(post.comments, function (commentIndex, comment) {
+            // Sort comments by publishedAt in descending order
+            post.comments.sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
+
+            // Display only the latest two comments
+            const latestComments = post.comments.slice(0, 2);
+            $.each(latestComments, function (commentIndex, comment) {
               let commentPf = `<img class="rounded-full max-w-none w-10 h-10 object-cover" src="https://cms.istad.co${comment.user.profile.url}" />`;
               let commentContent = `<p>${comment.comment}</p>`;
               let commentDate = `${formatDate(comment.publishedAt)}`;
@@ -308,13 +313,6 @@ $(document).ready(function () {
           $('.post').on('click', `#commentSend_${index}`, function () {
             let userId = localStorage.getItem('id');
             let commentText = $(`.comment-input_${index}`).val();
-
-            console.log(
-              'Clicked on comment input for postId:',
-              post.id,
-              userId,
-              commentText
-            );
 
             $(document).ready(function () {
               if(!userId) {

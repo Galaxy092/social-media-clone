@@ -344,13 +344,6 @@ $(document).ready(function () {
             let userId = localStorage.getItem('id');
             let commentText = $(`.comment-input_${index}`).val();
 
-            console.log(
-              'Clicked on comment input for postId:',
-              post.id,
-              userId,
-              commentText
-            );
-
             $(document).ready(function () {
               // Fetch stories from the API
               $.ajax({

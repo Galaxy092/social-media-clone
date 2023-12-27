@@ -1571,6 +1571,10 @@ video {
   padding-left: 2.75rem;
 }
 
+.pr-4 {
+  padding-right: 1rem;
+}
+
 .ps-10 {
   padding-inline-start: 2.5rem;
 }
@@ -1597,10 +1601,6 @@ video {
 
 .pt-8 {
   padding-top: 2rem;
-}
-
-.pr-4 {
-  padding-right: 1rem;
 }
 
 .text-left {
@@ -1664,11 +1664,6 @@ video {
 .text-xs {
   font-size: 0.75rem;
   line-height: 1rem;
-}
-
-.text-5xl {
-  font-size: 3rem;
-  line-height: 1;
 }
 
 .font-bold {
@@ -2242,12 +2237,12 @@ video {
     margin-right: 1.5rem;
   }
 
-  .md\:ml-16 {
-    margin-left: 4rem;
-  }
-
   .md\:mb-0 {
     margin-bottom: 0px;
+  }
+
+  .md\:ml-16 {
+    margin-left: 4rem;
   }
 
   .md\:block {

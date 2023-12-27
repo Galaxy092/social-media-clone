@@ -65,33 +65,6 @@ function updatePostSection(categoryId) {
                                   <img class="w-full" src="https://cms.istad.co${
                                     post.attributes.photo.data.attributes.url
                                   }">
-                                  <!-- Slider controls -->
-                                  <button type="button"
-                                      class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
-                                      data-carousel-prev>
-                                      <span
-                                          class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 group-hover:bg-white/50 group-focus:ring-4 group-focus:ring-white group-focus:outline-none">
-                                          <svg class="w-4 h-4 text-white rtl:rotate-180" aria-hidden="true"
-                                              xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                                              <path stroke="currentColor" stroke-linecap="round"
-                                                  stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4" />
-                                          </svg>
-                                          <span class="sr-only">Previous</span>
-                                      </span>
-                                  </button>
-                                  <button type="button"
-                                      class="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
-                                      data-carousel-next>
-                                      <span
-                                          class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 group-hover:bg-white/50 group-focus:ring-4 group-focus:ring-white group-focus:outline-none">
-                                          <svg class="w-4 h-4 text-white rtl:rotate-180" aria-hidden="true"
-                                              xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                                              <path stroke="currentColor" stroke-linecap="round"
-                                                  stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4" />
-                                          </svg>
-                                          <span class="sr-only">Next</span>
-                                      </span>
-                                  </button>
                               </div>
                           </div>
                           <p class="text-start">
@@ -173,10 +146,14 @@ function updatePostSection(categoryId) {
           post.attributes.comments &&
           post.attributes.comments.data.length > 0
         ) {
+          // Sort comments by publishedAt in descending order
+          post.attributes.comments.data.sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
+
+          // Display only the latest two comments
+          const latestComments = post.attributes.comments.data.slice(0, 2);
           $.each(
-            post.attributes.comments.data,
+            latestComments,
             function (commentIndex, comment) {
-              //console.log(comment.attributes.comment)
               let commentPf = comment?.attributes.user.data?.attributes.profile
                 .data?.attributes.url
                 ? `<img class="rounded-full max-w-none w-10 h-10 object-cover"
@@ -467,8 +444,13 @@ $(document).ready(function () {
           post.attributes.comments &&
           post.attributes.comments.data.length > 0
         ) {
+          // Sort comments by publishedAt in descending order
+          post.attributes.comments.data.sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
+
+          // Display only the latest two comments
+          const latestComments = post.attributes.comments.data.slice(0, 2);
           $.each(
-            post.attributes.comments.data,
+            latestComments,
             function (commentIndex, comment) {
               //console.log(comment.attributes.comment)
               let commentPf = comment?.attributes.user.data?.attributes.profile
@@ -523,13 +505,6 @@ $(document).ready(function () {
         $('.post').on('click', `#commentSend_${index}`, function () {
           let userId = localStorage.getItem('id');
           let commentText = $(`.comment-input_${index}`).val();
-
-          console.log(
-            'Clicked on comment input for postId:',
-            postId,
-            userId,
-            commentText
-          );
 
           $(document).ready(function () {
             if(!userId) {
