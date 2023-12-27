@@ -566,3 +566,75 @@ $(document).ready(function () {
   // Fetch and display user data initially
   fetchAndDisplayUserData();
 });
+
+$.ajax({
+  url: 'https://cms.istad.co/api/sm-categories?populate=posts.photo,posts.user.profile',
+  method: 'GET',
+  dataType: 'json',
+  success: function (data) {
+    // Populate the categories dynamically
+    data.data.forEach(function (category) {
+      // Check if the category has posts
+      if (category.attributes.posts.data.length > 0) {
+        var html = `
+          <div class="flex mx-4 gap-4">
+            <div class="mt-3">
+              <img src="/img/Arrow.svg" />
+            </div>
+            <div class="text-start">
+              <p class="font-bold" onclick="onCategoryClick(${category.id})">${category.attributes.name}</p>
+              <p class="text-base">${category.attributes.posts.data.length} posts</p>
+            </div>
+          </div>`;
+        $('#categorySection').append(html);
+      }
+    });
+  },
+  error: function (error) {
+    console.error('Error fetching data:', error);
+  },
+});
+
+// Function search by username
+function findUsername() {
+  let inputSearch = document.getElementById('input-search');
+  let searchList = document.getElementById('search_list');
+  let card = document.getElementById('search_card_list');
+  card.innerHTML = '';
+
+  let searchItem = inputSearch.value.trim();
+  if (searchItem.length > 0) {
+    searchList.classList.remove('hidden');
+
+    fetch(
+      `https://cms.istad.co/api/users?filters[username][$containsi]=${searchItem}&populate=*`
+    )
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        let items = data;
+        if (items.length > 0) {
+          items.forEach((data) => {
+            card.innerHTML += `
+              <a href="/src/pages/details.html?id=${data.id}">
+                <li class="w-full px-2 py-2 border-b border-gray-200 flex items-center gap-2">
+                  ${
+                    data.profile?.url
+                      ? `<img src="https://cms.istad.co${data.profile?.url}" alt="#" class="h-10 w-10 rounded-full object-cover" />`
+                      : `<img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" class="relative inline-block w-10 h-10 rounded-full border-2 border-white object-cover object-center story-thumbnail" />`
+                  }		  
+                  <p>${data.username}</p>
+                </li>
+              </a>
+            `;
+          });
+        } else {
+          card.innerHTML =
+            '<p class="w-full px-2 py-2 border-b border-gray-200 flex items-center gap-2">Username not found</p>';
+        }
+      });
+  } else {
+    searchList.classList.add('hidden');
+  }
+}

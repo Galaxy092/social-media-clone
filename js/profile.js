@@ -589,17 +589,20 @@ $.ajax({
   success: function (data) {
     // Populate the categories dynamically
     data.data.forEach(function (category) {
-      var html = `
-              <div class="flex mx-4 gap-4">
-                  <div class="mt-3">
-                    <img src="/img/Arrow.svg" alt="Arrow">
-                  </div>
-                  <div class="text-start">
-                      <p class="font-bold" onclick="onCategoryClick(${category.id})">${category.attributes.name}</p>
-                      <p class="text-base">${category.attributes.posts.data.length} posts</p>
-                  </div>
-              </div>`;
-      $('#categorySection').append(html);
+      // Check if the category has posts
+      if (category.attributes.posts.data.length > 0) {
+        var html = `
+          <div class="flex mx-4 gap-4">
+            <div class="mt-3">
+              <img src="/img/Arrow.svg" />
+            </div>
+            <div class="text-start">
+              <p class="font-bold" onclick="onCategoryClick(${category.id})">${category.attributes.name}</p>
+              <p class="text-base">${category.attributes.posts.data.length} posts</p>
+            </div>
+          </div>`;
+        $('#categorySection').append(html);
+      }
     });
   },
   error: function (error) {
