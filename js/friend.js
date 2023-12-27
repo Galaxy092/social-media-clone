@@ -378,3 +378,29 @@ $('#cameraIcon').click(function () {
   // Fetch user profile data and update the profile image
   fetchUserProfile();
 });
+
+// Make AJAX request to get category data and populate the categories dynamically
+$.ajax({
+  url: 'https://cms.istad.co/api/sm-categories?populate=posts.photo,posts.user.profile',
+  method: 'GET',
+  dataType: 'json',
+  success: function (data) {
+    // Populate the categories dynamically
+    data.data.forEach(function (category) {
+      var html = `
+              <div class="flex mx-4 gap-4">
+                  <div class="mt-3">
+                    <img src="/img/Arrow.svg" alt="Arrow">
+                  </div>
+                  <div class="text-start">
+                      <p class="font-bold" onclick="onCategoryClick(${category.id})">${category.attributes.name}</p>
+                      <p class="text-base">${category.attributes.posts.data.length} posts</p>
+                  </div>
+              </div>`;
+      $('#categorySection').append(html);
+    });
+  },
+  error: function (error) {
+    console.error('Error fetching data:', error);
+  },
+});

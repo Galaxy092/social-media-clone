@@ -239,7 +239,7 @@ $(document).ready(function () {
                                       </path>
                                   </svg>
                               </span>
-                              <span class="text-lg font-bold">34</span>
+                              <span class="text-lg font-bold">0</span>
                           </a>
                           <a class="inline-flex items-center" href="#">
                               <span class="ml-2">
