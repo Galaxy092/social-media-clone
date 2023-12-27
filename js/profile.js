@@ -63,7 +63,6 @@ $.ajax({
     $('#profileRelationshipStatus').text(
       userBio.relationshipStatus || 'No relationship status available'
     );
-    
   },
   error: function (error) {
     console.error('Error fetching user bio:', error);
@@ -231,7 +230,7 @@ $(document).ready(function () {
                                     <path d="M2,21L23,12L2,3V10L17,12L2,14V21Z"></path>
                                 </svg>
                             </span>
-                        </div>
+                          </div>
                           <!-- Comments content -->
                           <div class="comments-section">
                             <div class="pt-6" id="commentsContainer_${index}">
@@ -318,6 +317,12 @@ $(document).ready(function () {
             );
 
             $(document).ready(function () {
+              if(!userId) {
+                // User is not logged in, show toastr message
+                toastr.warning('Please login to comment.');
+                $(`.comment-input_${index}`).val('');
+                return
+              }
               // Fetch stories from the API
               $.ajax({
                 url: 'https://cms.istad.co/api/sm-comments',
@@ -553,17 +558,27 @@ function fetchUserProfile() {
     type: 'GET',
     dataType: 'json',
     success: function (data) {
-      // Assuming the profile picture URL is stored in the 'profile' property
-      const profilePictureURL = data.profile ? data.profile.url : '';
+      // Check if the user has a profile picture
+      const hasProfilePicture = data.profile && data.profile.url;
 
+      // Set the default profile picture URL
+      const defaultProfilePictureURL =
+        'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png';
+
+      // Use the profile picture URL if available, otherwise use the default
+      const profilePictureURL = hasProfilePicture
+        ? `https://cms.istad.co${data.profile.url}`
+        : defaultProfilePictureURL;
       // Update the src attribute of an image tag with the profile picture URL
-      $('#old_profile_picture').attr(
-        'src',
-        `https://cms.istad.co${profilePictureURL}`
-      );
+      $('#old_profile_picture').attr('src', profilePictureURL);
     },
     error: function (error) {
       console.error('Error fetching user profile:', error);
+      // Handle the error as needed, e.g., show a default profile picture
+      $('#old_profile_picture').attr(
+        'src',
+        'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'
+      );
     },
   });
 }

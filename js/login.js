@@ -38,8 +38,8 @@ $(document).ready(function () {
     passwordInput.attr('type', type);
 
     // Change the label text based on the password visibility
-    const buttonText = type === 'password' ? 'Show' : 'Hide';
-    togglePasswordButton.text(buttonText);
+    const iconClass = type === 'password' ? 'fa-eye' : 'fa-eye-slash';
+    togglePasswordButton.html(`<i class="fas ${iconClass} pr-4 text-gray-600"></i>`);
   });
 });
 

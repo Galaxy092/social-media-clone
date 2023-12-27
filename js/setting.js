@@ -21,6 +21,8 @@ if (responseJwt) {
           'https://cms.istad.co' + userBio.profile.url ||
             'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'
         );
+        $('#userName').text(userBio.username || 'Unknown User');
+        $('#userGmail').text(userBio.email || 'No email available');
       } else {
         // If no profile picture exists, set a default image
         $('#profilePic').attr(

@@ -46,14 +46,27 @@ function register() {
   });
 }
 
-$(document).ready(function () {
-  $('.toggle-password').on('click', function () {
-      const passwordInput = $(this).prev('.password-input');
-      const type = passwordInput.attr('type') === 'password' ? 'text' : 'password';
-      passwordInput.attr('type', type);
+const passwordInput = $('#password');
+const togglePasswordButton = $('#togglePassword1');
 
-      // Change the button text based on the password visibility
-      const buttonText = type === 'password' ? 'Show' : 'Hide';
-      $(this).text(buttonText);
-  });
+togglePasswordButton.on('click', function () {
+  const type =
+    passwordInput.attr('type') === 'password' ? 'text' : 'password';
+  passwordInput.attr('type', type);
+
+  // Change the label text based on the password visibility
+  const iconClass = type === 'password' ? 'fa-eye' : 'fa-eye-slash';
+  togglePasswordButton.html(`<i class="fas ${iconClass} pr-4 text-gray-600"></i>`);
+});
+const passwordInput1 = $('#repeat-password');
+const togglePasswordButton1 = $('#togglePassword');
+
+togglePasswordButton1.on('click', function () {
+  const type =
+    passwordInput1.attr('type') === 'password' ? 'text' : 'password';
+  passwordInput1.attr('type', type);
+
+  // Change the label text based on the password visibility
+  const iconClass = type === 'password' ? 'fa-eye' : 'fa-eye-slash';
+  togglePasswordButton1.html(`<i class="fas ${iconClass} pr-4 text-gray-600"></i>`);
 });

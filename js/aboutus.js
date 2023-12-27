@@ -101,9 +101,15 @@ function updateButtonBasedOnLocalStorage() {
   if (localStorage.getItem('id')) {
     // User is logged in, update button text
     logoutText.innerText = 'Logout';
+    $('#logo').attr(
+      'src',
+      '/img/logout.svg');
   } else {
     // User is not logged in, update button text
     logoutText.innerText = 'Login';
+    $('#logo').attr(
+      'src',
+      '/img/login.svg');
   }
 }
 

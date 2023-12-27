@@ -21,6 +21,8 @@ if (responseJwt) {
           'https://cms.istad.co' + userBio.profile.url ||
             'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'
         );
+        $('#userName').text(userBio.username || 'Unknown User');
+        $('#userGmail').text(userBio.email || 'No email available');
       } else {
         // If no profile picture exists, set a default image
         $('#profilePic').attr(
@@ -134,7 +136,7 @@ function logout() {
 $(document).ready(function () {
   // Fetch post from the API
   $.ajax({
-    url: `https://cms.istad.co/api/sm-posts/${getIDFromUrl()}?populate=photo,user.profile`,
+    url: `https://cms.istad.co/api/sm-posts/${getIDFromUrl()}?populate=photo,user.profile,comments.user.profile`,
     method: 'GET',
     dataType: 'json',
     success: function (data) {
@@ -155,16 +157,20 @@ $(document).ready(function () {
                             <div class="flex">
                                 <a class="inline-block mr-4" href="#">
                                     <img src="https://cms.istad.co${
-                                        post.attributes.user.data.attributes.profile.data.attributes.url
+                                      post?.attributes?.user.data.attributes
+                                        .profile.data.attributes.url
                                     }" class="rounded-full max-w-none w-14 h-14" src="" />
                                 </a>
                                 <div class="flex flex-col">
                                     <h6 class="inline-block text-lg font-bold text-start">
-                                      <a href="#">${post?.attributes?.user?.data?.attributes?.username}</a>
+                                      <a href="#">${
+                                        post?.attributes?.user?.data?.attributes
+                                          ?.username
+                                      }</a>
                                     </h6>
   
                                     <div class="text-slate-500" id="formattedDate">
-                                      ${formatDate(post.attributes.createdAt)}
+                                      ${formatDate(post.attributes?.createdAt)}
                                     </div>
                                 </div>
                             </div>
@@ -222,9 +228,11 @@ $(document).ready(function () {
                         </div>
                         <div class="relative">
                             <input
-                                class="pt-2 pb-2 pl-3 w-full h-11 bg-slate-100 rounded-lg placeholder:text-slate-600 font-medium pr-20"
-                                type="text" placeholder="Write a comment" />
-                            <span class="flex absolute right-3 top-2/4 -mt-3 items-center">
+                                class="comment-input_${index} pt-2 pb-2 pl-3 w-full h-11 bg-slate-100 rounded-lg placeholder:text-slate-600 font-medium pr-20"
+                                type="text" data-post-id="${
+                                  post.id
+                                }" placeholder="Write a comment" />
+                            <span id="commentSend_${index}" class="flex absolute right-3 top-2/4 -mt-3 items-center">
                                 <svg class="fill-blue-500" style="width: 24px; height: 24px;"
                                     viewBox="0 0 24 24">
                                     <path d="M2,21L23,12L2,3V10L17,12L2,14V21Z"></path>
@@ -245,47 +253,58 @@ $(document).ready(function () {
             <!-- End Wrapper-->
         </section>
             `);
-        if (post.comments && post.comments.length > 0) {
-          $.each(post.comments, function (commentIndex, comment) {
-            let commentPf = `<img class="rounded-full max-w-none w-10 h-10 object-cover"
-                    src="https://cms.istad.co${comment.user.profile.url}" />`;
-            let commentContent = `<p>${comment.comment}</p>`;
-            let commentDate = `${formatDate(comment.publishedAt)}`;
-            let commentUsername = `<a class="inline-block text-base font-bold mr-2" href="/src/pages/details.html?id=${comment.user.id}">${comment.user.username}</a>`;
-
-            // Append each comment to the postContainer
-            postContainer.find(`#commentsContainer_${index}`).append(`
-            <!-- Comment row -->
-            <div class="media flex pb-4">
-                <a class="mr-4" href="#">
-                  ${commentPf}
-                </a>
-                <div class="media-body text-start">
-                    <div>
-                        ${commentUsername}
-                        <span class="text-slate-500">${commentDate}</span>
-                    </div>
-                    ${commentContent}
-                    <div class="mt-2 flex items-center">
-                        <a class="inline-flex items-center py-2 mr-3" href="#">
-                            <span class="mr-2">
-                                <svg class="fill-rose-600" style="width: 22px; height: 22px;"
-                                    viewBox="0 0 24 24">
-                                    <path
-                                        d="M12,21.35L10.55,20.03C5.4,15.36 2,12.27 2,8.5C2,5.41 4.42,3 7.5,3C9.24,3 10.91,3.81 12,5.08C13.09,3.81 14.76,3 16.5,3C19.58,3 22,5.41 22,8.5C22,12.27 18.6,15.36 13.45,20.03L12,21.35Z">
-                                    </path>
-                                </svg>
-                            </span>
-                            <span class="text-base font-bold">0</span>
+            if (
+              post.attributes.comments &&
+              post.attributes.comments.data.length > 0
+            ) {
+              $.each(
+                post.attributes.comments.data,
+                function (commentIndex, comment) {
+                  //console.log(comment.attributes.comment)
+                  let commentPf = comment?.attributes.user.data?.attributes.profile
+                    .data?.attributes.url
+                    ? `<img class="rounded-full max-w-none w-10 h-10 object-cover"
+                    src="https://cms.istad.co${comment?.attributes.user.data.attributes.profile.data.attributes.url}" />`
+                    : `<img class="rounded-full max-w-none w-10 h-10 object-cover"
+                    src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" />`;
+                  let commentContent = `<p>${comment.attributes.comment}</p>`;
+                  let commentDate = `${formatDate(comment.attributes.publishedAt)}`;
+                  let commentUsername = `<a class="inline-block text-base font-bold mr-2" href="/src/pages/details.html?id=${comment.attributes.user.data.id}">${comment.attributes.user.data.attributes.username}</a>`;
+    
+                  // Append each comment to the postContainer
+                  postContainer.find(`#commentsContainer_${index}`).append(`
+                    <!-- Comment row -->
+                    <div class="media flex pb-4">
+                        <a class="mr-4" href="/src/pages/details.html?id=${comment.attributes.user.data.id}">
+                          ${commentPf}
                         </a>
-                        <button class="py-2 px-4 font-medium hover:bg-slate-50 rounded-lg">
-                            Reply
-                        </button>
-                    </div>
-                </div>
-            `);
-          });
-        }
+                        <div class="media-body text-start">
+                            <div>
+                                ${commentUsername}
+                                <span class="text-slate-500">${commentDate}</span>
+                            </div>
+                            ${commentContent}
+                            <div class="mt-2 flex items-center">
+                                <a class="inline-flex items-center py-2 mr-3" href="#">
+                                    <span class="mr-2">
+                                        <svg class="fill-rose-600" style="width: 22px; height: 22px;"
+                                            viewBox="0 0 24 24">
+                                            <path
+                                                d="M12,21.35L10.55,20.03C5.4,15.36 2,12.27 2,8.5C2,5.41 4.42,3 7.5,3C9.24,3 10.91,3.81 12,5.08C13.09,3.81 14.76,3 16.5,3C19.58,3 22,5.41 22,8.5C22,12.27 18.6,15.36 13.45,20.03L12,21.35Z">
+                                            </path>
+                                        </svg>
+                                    </span>
+                                    <span class="text-base font-bold">0</span>
+                                </a>
+                                <button class="py-2 px-4 font-medium hover:bg-slate-50 rounded-lg">
+                                    Reply
+                                </button>
+                            </div>
+                        </div>
+                    `);
+                }
+              );
+            }
       });
     },
     error: function (error) {

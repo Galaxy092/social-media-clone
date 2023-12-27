@@ -8,6 +8,12 @@ function updatePostSection(categoryId) {
       // Get the posts related to the selected category
       const posts = categoryData.data.attributes.posts.data;
 
+      // Check if there are no posts
+      if (posts.length === 0) {
+        $('.post').html('<p>No posts available for this category.</p>');
+        return;
+      }
+
       // Randomize the order of posts
       const shuffledPosts = posts.sort(() => Math.random() - 0.5);
 
@@ -171,8 +177,12 @@ function updatePostSection(categoryId) {
             post.attributes.comments.data,
             function (commentIndex, comment) {
               //console.log(comment.attributes.comment)
-              let commentPf = `<img class="rounded-full max-w-none w-10 h-10 object-cover"
-                  src="https://cms.istad.co${comment.attributes.user.data.attributes.profile.data.attributes.url}" />`;
+              let commentPf = comment?.attributes.user.data?.attributes.profile
+                .data?.attributes.url
+                ? `<img class="rounded-full max-w-none w-10 h-10 object-cover"
+                src="https://cms.istad.co${comment?.attributes.user.data.attributes.profile.data.attributes.url}" />`
+                : `<img class="rounded-full max-w-none w-10 h-10 object-cover"
+                src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" />`;
               let commentContent = `<p>${comment.attributes.comment}</p>`;
               let commentDate = `${formatDate(comment.attributes.publishedAt)}`;
               let commentUsername = `<a class="inline-block text-base font-bold mr-2" href="#">${comment.attributes.user.data.attributes.username}</a>`;
@@ -227,7 +237,13 @@ function updatePostSection(categoryId) {
           );
 
           $(document).ready(function () {
-            // Fetch stories from the API
+            if(!userId) {
+              // User is not logged in, show toastr message
+              toastr.warning('Please login to comment.');
+              $(`.comment-input_${index}`).val('');
+              return
+            }
+            // Fetch comments from the API
             $.ajax({
               url: 'https://cms.istad.co/api/sm-comments',
               method: 'POST',
@@ -292,7 +308,10 @@ $(document).ready(function () {
     dataType: 'json',
     success: function (data) {
       // Sort posts by createdAt in descending order
-      const sortedPosts = data.data.sort((a, b) => new Date(b.attributes.createdAt) - new Date(a.attributes.createdAt));
+      const sortedPosts = data.data.sort(
+        (a, b) =>
+          new Date(b.attributes.createdAt) - new Date(a.attributes.createdAt)
+      );
       // Iterate through each story in the response
       $.each(sortedPosts, function (index, post) {
         // Function to handle sharing the post
@@ -452,8 +471,12 @@ $(document).ready(function () {
             post.attributes.comments.data,
             function (commentIndex, comment) {
               //console.log(comment.attributes.comment)
-              let commentPf = `<img class="rounded-full max-w-none w-10 h-10 object-cover"
-                src="https://cms.istad.co${comment?.attributes.user.data.attributes.profile.data.attributes.url}" />`;
+              let commentPf = comment?.attributes.user.data?.attributes.profile
+                .data?.attributes.url
+                ? `<img class="rounded-full max-w-none w-10 h-10 object-cover"
+                src="https://cms.istad.co${comment?.attributes.user.data.attributes.profile.data.attributes.url}" />`
+                : `<img class="rounded-full max-w-none w-10 h-10 object-cover"
+                src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" />`;
               let commentContent = `<p>${comment.attributes.comment}</p>`;
               let commentDate = `${formatDate(comment.attributes.publishedAt)}`;
               let commentUsername = `<a class="inline-block text-base font-bold mr-2" href="/src/pages/details.html?id=${comment.attributes.user.data.id}">${comment.attributes.user.data.attributes.username}</a>`;
@@ -509,7 +532,13 @@ $(document).ready(function () {
           );
 
           $(document).ready(function () {
-            // Fetch stories from the API
+            if(!userId) {
+              // User is not logged in, show toastr message
+              toastr.warning('Please login to comment.');
+              $(`.comment-input_${index}`).val('');
+              return
+            }
+            // Fetch comments from the API
             $.ajax({
               url: 'https://cms.istad.co/api/sm-comments',
               method: 'POST',
@@ -563,9 +592,7 @@ function copyToClipboard(text) {
   const baseUrl = 'https://social-kh.vercel.app'; // Replace with your actual production URL
   const tempInput = $('<input>');
   $('body').append(tempInput);
-  tempInput
-    .val(`${baseUrl}/src/pages/post.html?id=${text}`)
-    .select();
+  tempInput.val(`${baseUrl}/src/pages/post.html?id=${text}`).select();
   document.execCommand('copy');
   tempInput.remove();
 }

@@ -17,6 +17,9 @@
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <!-- Include Toastr library -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+    <!-- Material Icon CDN -->
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     <title id="title"></title>
 </head>
 
@@ -423,8 +426,6 @@
                                 <p class="mt-2 text-xs text-gray-500 " id="file_input_help">SVG, PNG, JPG or GIF (MAX.
                                     800x400px).</p>
                                 <!-- Display the old profile picture here -->
-                                <label id="labelPreview" class="mb-2 text-sm font-medium text-gray-900"
-                                    for="preview">Old Image</label>
                                 <img id="old_profile_picture" class="block w-full h-auto mb-2" src=""
                                     alt="Old Profile Picture">
                             </div>
@@ -473,7 +474,7 @@
                     <div class="lg:relative">
                         <div class="relative lg:top-12 bottom-16 text-base text-white lg:flex">
                             <button data-modal-target="story-modal" data-modal-toggle="story-modal"
-                                class="h-10 w-44 bg-blue-600 rounded-lg">Add Story</button>
+                                class="h-10 w-44 bg-blue-600 rounded-lg mb-2 sm:mb-0 md:mb-0 lg:mb-0">Add Story</button>
                             <button class="h-10 w-44 bg-blue-600 rounded-lg lg:mx-4"><a
                                     href="/src/pages/setting.html">Edit
                                     Profile</a></button>
@@ -490,28 +491,36 @@
 
                 <div class="flex gap-4 text-base pb-4">
                     <div class="w-8 h-8">
-                        <i class="fa-solid fa-location-dot text-xl"></i>
+                        <span class="material-symbols-outlined text-gray-600 text-3xl">
+                            location_on
+                        </span>
                     </div>
                     <p class="text-left" id="profileLocation"></p>
                 </div>
 
                 <div class="flex gap-4 text-base pb-4">
                     <div class="w-8 h-8">
-                        <i class="fa-solid fa-graduation-cap fa-lg"></i>
+                        <span class="material-symbols-outlined text-gray-600 text-3xl">
+                            school
+                        </span>
                     </div>
                     <p class="text-left" id="profileEducation"></p>
                 </div>
 
                 <div class="flex gap-4 text-base pb-4">
                     <div class="w-8 h-8">
-                        <i class="fa-solid fa-building fa-lg"></i>
+                        <span class="material-symbols-outlined text-gray-600 text-3xl">
+                            apartment
+                        </span>
                     </div>
                     <p class="text-left" id="profileWorkplace"></p>
                 </div>
 
                 <div class="flex gap-4 text-base pb-4">
                     <div class="w-8 h-8">
-                        <i class="fa-solid fa-heart fa-lg"></i>
+                        <span class="material-symbols-outlined text-gray-600 text-3xl">
+                            favorite
+                        </span>
                     </div>
                     <p class="text-left" id="profileRelationshipStatus"></p>
                 </div>
@@ -556,7 +565,7 @@
                     </p>
 
                     <div class="mx-4 flex flex-wrap gap-y-8" id="userListContainer">
-                        
+
                     </div>
                 </section>
 

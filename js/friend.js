@@ -259,23 +259,122 @@ $(document).ready(function () {
   // Fetch and display user data initially
   fetchAndDisplayUserData();
 });
-// fetching data from api
-// fetch('url')
-//   .then((item) => item.json())
-//   .then((data) => {
-//     let friendList = data.friends;
 
-//     console.log(data.img);
+// Function to fetch user profile data and update the profile image
+function fetchUserProfile() {
+  const userId = localStorage.getItem('id');
+  $.ajax({
+    url: `https://cms.istad.co/api/users/${userId}?populate=profile`,
+    type: 'GET',
+    dataType: 'json',
+    success: function (data) {
+      // Check if the user has a profile picture
+      const hasProfilePicture = data.profile && data.profile.url;
 
-//     // create card to hold the friend lists
-//     let card = '';
-//     friendList.map(friend => {
-//       card += `
-//         <div>
-//             <img src="${friend.img}" id="img" class="lg:w-[220px] lg:h-[240px] md:w-[220px] md:h-[240px] sm:w-[180px] sm:h-[200px] rounded-lg" alt="">
-//             <p class="text-left" id="">${friend.username}</p>
-//         </div>
-//       `;
-//     });
-//     bodyEl.innerHTML = card;
-//   });
+      // Set the default profile picture URL
+      const defaultProfilePictureURL =
+        'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png';
+
+      // Use the profile picture URL if available, otherwise use the default
+      const profilePictureURL = hasProfilePicture
+        ? `https://cms.istad.co${data.profile.url}`
+        : defaultProfilePictureURL;
+      // Update the src attribute of an image tag with the profile picture URL
+      $('#old_profile_picture').attr('src', profilePictureURL);
+    },
+    error: function (error) {
+      console.error('Error fetching user profile:', error);
+      // Handle the error as needed, e.g., show a default profile picture
+      $('#old_profile_picture').attr(
+        'src',
+        'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'
+      );
+    },
+  });
+}
+
+// Function to update the profile
+async function updateProfile() {
+  const fileInput = $('#new_profile_picture_input')[0]; // Assuming you have a single file input
+  const files = fileInput.files;
+  const imageId = await uploadImage(files);
+
+  let newProfile = {
+    profile: imageId[0].id,
+  };
+
+  $.ajax({
+    url: `https://cms.istad.co/api/users/${userId}`,
+    type: 'PUT',
+    contentType: 'application/json',
+    data: JSON.stringify(newProfile),
+    headers: {
+      Authorization: `Bearer ${responseJwt}`,
+    },
+    success: function (data) {
+      // Show Toastr notification
+      toastr.success('Profile picture updated successfully');
+
+      // Reload the page after a short delay (you can adjust the delay as needed)
+      setTimeout(function () {
+        location.reload();
+      }, 1000);
+    },
+    error: function (e) {
+      console.log(e);
+      // Show Toastr notification for error
+      toastr.error('Error updating profile picture');
+    },
+  });
+}
+
+async function uploadImage(files) {
+  const formData = new FormData();
+
+  // Handle multiple files
+  for (const file of files) {
+    formData.append('files', file);
+  }
+
+  try {
+    const res = await fetch('https://cms.istad.co/api/upload', {
+      method: 'POST',
+      body: formData,
+    });
+
+    if (!res.ok) {
+      throw new Error(`Failed to upload image. Status: ${res.status}`);
+    }
+
+    return res.json();
+  } catch (error) {
+    console.error('Error uploading image:', error);
+    throw error; // Rethrow the error to handle it in the calling function
+  }
+}
+
+// Function to handle new image selection
+function handleImageSelection() {
+  const newProfilePictureInput = $('#new_profile_picture_input')[0];
+
+  // Check if a file is selected
+  if (newProfilePictureInput.files.length > 0) {
+    const newProfilePictureFile = newProfilePictureInput.files[0];
+    const newProfilePictureURL = URL.createObjectURL(newProfilePictureFile);
+
+    // Update the src attribute of the old profile picture with the new one
+    $('#old_profile_picture').attr('src', newProfilePictureURL);
+  }
+}
+
+// Attach the handleImageSelection function to the change event of the input
+$('#new_profile_picture_input').on('change', handleImageSelection);
+
+// Call fetchUserProfile to initially load the old profile picture
+fetchUserProfile();
+
+// Function to handle the click event on the camera icon
+$('#cameraIcon').click(function () {
+  // Fetch user profile data and update the profile image
+  fetchUserProfile();
+});

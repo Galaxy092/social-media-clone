@@ -115,9 +115,21 @@ function updateButtonBasedOnLocalStorage() {
   if (localStorage.getItem('id')) {
     // User is logged in, update button text
     logoutText.innerText = 'Logout';
+    $('#logo').attr(
+      'src',
+      '/img/logout.svg');
+    $('#logores').attr(
+      'src',
+      '/img/logout.svg');
   } else {
     // User is not logged in, update button text
     logoutText.innerText = 'Login';
+    $('#logo').attr(
+      'src',
+      '/img/login.svg');
+    $('#logores').attr(
+      'src',
+      '/img/login.svg');
   }
 }
 
@@ -212,7 +224,11 @@ $(document).ready(function () {
         const userId = story.attributes.user.data.id;
 
         // Check if we already have a story for this user
-        if (!latestStoriesByUser[userId] || new Date(story.attributes.createdAt) > new Date(latestStoriesByUser[userId].attributes.createdAt)) {
+        if (
+          !latestStoriesByUser[userId] ||
+          new Date(story.attributes.createdAt) >
+            new Date(latestStoriesByUser[userId].attributes.createdAt)
+        ) {
           // Update the latest story for this user
           latestStoriesByUser[userId] = story;
         }
@@ -493,6 +509,12 @@ function updatePostSection(categoryId) {
           );
 
           $(document).ready(function () {
+            if(!userId) {
+              // User is not logged in, show toastr message
+              toastr.warning('Please login to comment.');
+              $(`.comment-input_${index}`).val('');
+              return
+            }
             // Fetch stories from the API
             $.ajax({
               url: 'https://cms.istad.co/api/sm-comments',
@@ -541,7 +563,7 @@ $.ajax({
       var html = `
               <div class="flex mx-4 gap-4">
                   <div class="mt-3">
-                      <i class="fa-solid fa-circle-chevron-right text-blue-600 fa-xl"></i>
+                    <img src="/img/Arrow.svg" alt="Arrow">
                   </div>
                   <div class="text-start">
                       <p class="font-bold" onclick="onCategoryClick(${category.id})">${category.attributes.name}</p>
