@@ -45,6 +45,10 @@ $.ajax({
 });
 
 const userId = localStorage.getItem('id');
+if (!userId) {
+  // If user ID is not present, redirect to home.html
+  window.location.replace('home.html');
+}
 // display all post
 $(document).ready(function () {
   // Fetch post from the API

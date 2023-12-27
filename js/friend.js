@@ -1,5 +1,11 @@
 'use strict';
 
+const userId = localStorage.getItem('id');
+if (!userId) {
+  // If user ID is not present, redirect to home.html
+  window.location.replace('home.html');
+}
+
 // Get User Bio
 const responseJwt = localStorage.getItem('token');
 $(document).ready(function() {
