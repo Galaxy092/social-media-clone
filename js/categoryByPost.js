@@ -461,13 +461,13 @@ $(document).ready(function () {
                 src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" />`;
               let commentContent = `<p>${comment.attributes.comment}</p>`;
               let commentDate = `${formatDate(comment.attributes.publishedAt)}`;
-              let commentUsername = `<a class="inline-block text-base font-bold mr-2" href="/src/pages/details.html?id=${comment.attributes.user.data.id}">${comment.attributes.user.data.attributes.username}</a>`;
+              let commentUsername = `<a class="inline-block text-base font-bold mr-2" href="/src/pages/details.html?id=${comment?.attributes.user.data?.id}">${comment?.attributes.user.data?.attributes.username}</a>`;
 
               // Append each comment to the postContainer
               postContainer.find(`#commentsContainer_${index}`).append(`
                 <!-- Comment row -->
                 <div class="media flex pb-4">
-                    <a class="mr-4" href="/src/pages/details.html?id=${comment.attributes.user.data.id}">
+                    <a class="mr-4" href="/src/pages/details.html?id=${comment.attributes.user.data?.id}">
                       ${commentPf}
                     </a>
                     <div class="media-body text-start">
