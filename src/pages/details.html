@@ -211,9 +211,9 @@
                 </div>
 
                 <div class="sticky inset-x-0 bottom-0 border-t border-gray-100 bg-white p-2">
-                    <button type="submit" onclick="logout()"
+                    <button type="submit" onclick="handleButtonClick()"
                         class="group relative flex w-full justify-center rounded-lg px-2 py-1.5 text-sm text-gray-500 hover:bg-gray-100 hover:text-gray-700">
-                        <img src="../../img/Logout.svg" alt="Logout">
+                        <img id="logores" src="" alt="Logout">
 
                         <span
                             class="absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-xs font-medium text-white opacity-0 group-hover:opacity-100">
@@ -376,7 +376,7 @@
         </div>
 
         <!-- content -->
-        <main class="min-h-screen lg:w-3/5 md:w-9/10 sm:w-9/10 p-4 text-xl bg-gray-200">
+        <main class="min-h-screen lg:w-3/5 md:w-11/12 sm:w-11/12 w-11/12 p-4 text-xl bg-gray-200">
             <!-- cover profile section -->
             <section class="min-w-full lg:h-[500px] md:h-[570px] sm:h-[570px] bg-white rounded-lg">
                 <!-- cover image -->
@@ -384,10 +384,10 @@
                     src="https://i.pinimg.com/564x/3d/9a/96/3d9a964beaebdd17cfa2cd8740eb531a.jpg" alt="image cover">
 
                 <!-- profile section -->
-                <div class="flex lg:justify-between min-w-fit flex-wrap">
+                <div class="flex flex-col lg:flex-row justify-around">
                     <!-- profile image -->
                     <div class="">
-                        <div class="flex lg:ml-0 md:ml-16 ">
+                        <div class="flex lg:ml-0 sm:ml-0 md:ml-16 ">
                             <img class="object-cover relative bottom-24 lg:left-10 md:left-[50%] sm:left-[50%] h-44 w-44 rounded-full ring-blue-600 ring"
                                 id="profileImage" src="" alt="">
                         </div>

@@ -313,17 +313,17 @@ $(document).ready(function () {
                         <div class="flex pb-6 items-center justify-between">
                             <div class="flex">
                                 <a class="inline-block mr-4" href="/src/pages/details.html?id=${
-                                  post.attributes.user.data.id
+                                  post.attributes.user.data?.id
                                 }">
                                     <img src="https://cms.istad.co${
-                                      post.attributes.user.data.attributes
-                                        .profile.data.attributes.url
+                                      post.attributes.user.data?.attributes
+                                        .profile.data?.attributes.url
                                     }" class="rounded-full max-w-none w-14 h-14" src="" />
                                 </a>
                                 <div class="flex flex-col">
                                     <h6 class="inline-block text-lg font-bold text-start">
                                       <a href="/src/pages/details.html?id=${
-                                        post.attributes.user.data.id
+                                        post.attributes.user.data?.id
                                       }">${
           post.attributes?.user?.data?.attributes?.username
         }</a>
@@ -359,7 +359,7 @@ $(document).ready(function () {
                         <div class="py-4">
                             <div id="default-carousel" class="relative w-full" data-carousel="slide" data-index="${index}">
                                 <img class="w-full rounded-lg" src="https://cms.istad.co${
-                                  post.attributes.photo.data.attributes.url
+                                  post.attributes.photo.data?.attributes.url
                                 }">
                             </div>
                         </div>

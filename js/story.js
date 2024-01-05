@@ -1,6 +1,6 @@
 'use strict';
 
-/// Get User Bio
+// Get User Bio
 const responseJwt = localStorage.getItem('token');
 
 if (responseJwt) {
@@ -14,13 +14,24 @@ if (responseJwt) {
     success: function (userBio) {
       // Display User Info
       // Update the DOM with the fetched data
-      $('#profileImage').attr(
-        'src',
-        'https://cms.istad.co' + userBio.profile.url ||
+      if (userBio.profile && userBio.profile.url) {
+        // If a profile picture exists, set the image source to the URL
+        $('#profilePic').attr(
+          'src',
+          'https://cms.istad.co' + userBio.profile.url ||
+            'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'
+        );
+        $('#userName').text(userBio.username || 'Unknown User');
+        $('#userGmail').text(userBio.email || 'No email available');
+      } else {
+        // If no profile picture exists, set a default image
+        $('#profilePic').attr(
+          'src',
           'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'
-      );
-      $('#userName').text(userBio.username || 'Unknown User');
-      $('#userGmail').text(userBio.email || 'No email available');
+        );
+        $('#userName').text(userBio.username || 'Unknown User');
+        $('#userGmail').text(userBio.email || 'No email available');
+      }
 
       // Redirect to profile page when clicking on the user profile
       $('#profileLink').on('click', function () {
@@ -33,7 +44,7 @@ if (responseJwt) {
   });
 } else {
   // User is not authenticated, render guest image
-  $('#profileImage').attr(
+  $('#profilePic').attr(
     'src',
     'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'
   );
@@ -104,9 +115,21 @@ function updateButtonBasedOnLocalStorage() {
   if (localStorage.getItem('id')) {
     // User is logged in, update button text
     logoutText.innerText = 'Logout';
+    $('#logo').attr(
+      'src',
+      '../../img/logout.svg');
+    $('#logores').attr(
+      'src',
+      '../../img/logout.svg');
   } else {
     // User is not logged in, update button text
     logoutText.innerText = 'Login';
+    $('#logo').attr(
+      'src',
+      '../../img/login.svg');
+    $('#logores').attr(
+      'src',
+      '../../img/login.svg');
   }
 }
 

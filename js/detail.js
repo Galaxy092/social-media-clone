@@ -126,9 +126,13 @@ function updateButtonBasedOnLocalStorage() {
   if (localStorage.getItem('id')) {
     // User is logged in, update button text
     logoutText.innerText = 'Logout';
+    $('#logo').attr('src', '../../img/logout.svg');
+    $('#logores').attr('src', '../../img/logout.svg');
   } else {
     // User is not logged in, update button text
     logoutText.innerText = 'Login';
+    $('#logo').attr('src', '../../img/login.svg');
+    $('#logores').attr('src', '../../img/login.svg');
   }
 }
 
@@ -201,14 +205,18 @@ $(document).ready(function () {
                   <article class="mb-4 break-inside p-6 rounded-xl bg-white">
                       <div class="flex pb-6 items-center justify-between">
                           <div class="flex">
-                              <a class="inline-block mr-4" href="#">
+                              <a class="inline-block mr-4" href="/src/pages/details.html?id=${
+                                post.user.id
+                              }">
                                   <img src="https://cms.istad.co${
                                     post?.user?.profile?.url
                                   }" class="rounded-full max-w-none w-14 h-14" src="" />
                               </a>
                               <div class="flex flex-col">
                                   <h6 class="inline-block text-lg font-bold text-start">
-                                    <a href="#">${post?.user?.username}</a>
+                                    <a href="/src/pages/details.html?id=${
+                                      post.user.id
+                                    }">${post?.user?.username}</a>
                                   </h6>
 
                                   <div class="text-slate-500" id="formattedDate">
