@@ -117,10 +117,10 @@ function updateButtonBasedOnLocalStorage() {
     logoutText.innerText = 'Logout';
     $('#logo').attr(
       'src',
-      '../../img/logout.svg');
+      '../../img/Logout.svg');
     $('#logores').attr(
       'src',
-      '../../img/logout.svg');
+      '../../img/Logout.svg');
   } else {
     // User is not logged in, update button text
     logoutText.innerText = 'Login';
