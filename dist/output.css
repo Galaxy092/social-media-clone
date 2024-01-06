@@ -1068,11 +1068,6 @@ video {
   width: 100%;
 }
 
-.min-w-fit {
-  min-width: -moz-fit-content;
-  min-width: fit-content;
-}
-
 .min-w-full {
   min-width: 100%;
 }
@@ -2110,12 +2105,12 @@ video {
     margin-bottom: 0px;
   }
 
-  .sm\:mt-0 {
-    margin-top: 0px;
-  }
-
   .sm\:ml-0 {
     margin-left: 0px;
+  }
+
+  .sm\:mt-0 {
+    margin-top: 0px;
   }
 
   .sm\:block {
