@@ -109,6 +109,85 @@ $(document).ready(function () {
 
           // Append a new section for each story to the stories-container
           const postContainer = $('.post').append(`
+              <!-- Edit modal -->
+              <div id="editModal${
+                post.id
+              }" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+                  <div class="relative p-4 w-full max-w-md max-h-full">
+                      <!-- Modal content -->
+                      <div class="relative bg-white rounded-lg shadow">
+                          <!-- Modal header -->
+                          <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+                              <h3 class="text-lg font-semibold text-gray-900">
+                                  Update Post
+                              </h3>
+                              <button onClick="hideEditModal(${
+                                post.id
+                              })" type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="crud-modal">
+                                  <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                                  </svg>
+                                  <span class="sr-only">Close modal</span>
+                              </button>
+                          </div>
+                          <!-- Modal body -->
+                          <form id="editForm${
+                            post.id
+                          }" enctype="multipart/form-data" class="p-4 md:p-5">
+                              <div class="grid gap-4 mb-4 grid-cols-2">
+                                  <div class="col-span-2">
+                                      <label for="title${
+                                        post.id
+                                      }" class="text-start block mb-2 text-sm font-medium text-gray-900">Title</label>
+                                      <input type="text" value="${
+                                        post.title
+                                      }" name="title" id="title${
+                                        post.id
+                                      }" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" required>
+                                  </div>
+                                  <div class="col-span-2">
+                                      <label for="photo${
+                                        post.id
+                                      }" class="text-start block mb-2 text-sm font-medium text-gray-900">Post Photo</label>
+                                      <input type="file" name="photo" id="photo${
+                                        post.id
+                                      }" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" onchange="previewImageEdit(${
+                                        post.id
+                                      })">
+                                      <img id="preview${
+                                        post.id
+                                      }" src="https://cms.istad.co${
+                                        post?.photo?.url
+                                      }" class="hidden"/>
+                                      <!-- Existing photo ID (hidden input) -->
+                                      <input type="hidden" id="existingPhoto${
+                                        post.id
+                                      }" value="${
+                                        post?.photo?.id
+                                      }">
+                                  </div>
+                                  <div class="col-span-2">
+                                      <label for="detail${
+                                        post.id
+                                      }" class="text-start block mb-2 text-sm font-medium text-gray-900">Post Description</label>
+                                      <textarea id="detail${
+                                        post.id
+                                      }" name="detail" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500">${
+                                        post.detail
+                                      }</textarea>
+                                  </div>
+                              </div>
+                              <button type="button" onclick="updatePost(${
+                                post.id
+                              })" class="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                                  <svg class="me-1 -ms-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path></svg>
+                                  Update Post
+                              </button>
+                          </form>
+                      </div>
+                  </div>
+              </div>                  
+
               <!-- Wrapper-->
               <div class="wrapper mt-4">
                   <!-- Content grid -->
@@ -144,7 +223,9 @@ $(document).ready(function () {
                                 <div id="dropdown-${
                                   post.id
                                 }" class="rounded bg-white absolute hidden p-2 mr-30 shadow-md my-10 text-start text-sm z-50">
-                                  <div class="cursor-pointer hover:bg-gray-200 p-2 w-20 rounded"><a href="#">Edit</a></div>
+                                  <div class="cursor-pointer hover:bg-gray-200 p-2 w-20 rounded" onclick="showEditModal(${
+                                    post.id
+                                  })"><a href="#">Edit</a></div>
                                   <div class="cursor-pointer hover:bg-gray-200 p-2 w-20 rounded" onclick="showDeleteModal(${
                                     post.id
                                   })"><a href="#">Delete</a></div>
@@ -254,7 +335,9 @@ $(document).ready(function () {
           `);
           if (post.comments && post.comments.length > 0) {
             // Sort comments by publishedAt in descending order
-            post.comments.sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
+            post.comments.sort(
+              (a, b) => new Date(b.publishedAt) - new Date(a.publishedAt)
+            );
 
             // Display only the latest two comments
             const latestComments = post.comments.slice(0, 2);
@@ -315,11 +398,11 @@ $(document).ready(function () {
             let commentText = $(`.comment-input_${index}`).val();
 
             $(document).ready(function () {
-              if(!userId) {
+              if (!userId) {
                 // User is not logged in, show toastr message
                 toastr.warning('Please login to comment.');
                 $(`.comment-input_${index}`).val('');
-                return
+                return;
               }
               // Fetch stories from the API
               $.ajax({
@@ -838,3 +921,138 @@ $(document).ready(function () {
   // Fetch and display user data initially
   fetchAndDisplayUserData();
 });
+
+//Function Update Post 
+function showEditModal(postId) {
+  document.getElementById(`editModal${postId}`).classList.remove('hidden');
+}
+
+function hideEditModal(postId) {
+  document.getElementById(`editModal${postId}`).classList.add('hidden');
+}
+
+function previewImageEdit(postId) {
+  const fileInput = document.getElementById(`photo${postId}`);
+  const preview = document.getElementById(`preview${postId}`);
+  const labelPreview = document.getElementById(`labelPreview${postId}`);
+
+  if (fileInput.files && fileInput.files[0]) {
+    const reader = new FileReader();
+
+    reader.onload = function (e) {
+      preview.src = e.target.result;
+      preview.classList.remove('hidden');
+      labelPreview.classList.remove('hidden');
+    };
+
+    reader.readAsDataURL(fileInput.files[0]);
+  }
+}
+
+function clearPreviewImage(postId) {
+  const preview = document.getElementById(`preview${postId}`);
+  preview.src = '';
+  preview.classList.add('hidden');
+
+  const fileInput = document.getElementById(`photo${postId}`);
+  fileInput.value = '';
+}
+
+async function updatePost(postId) {
+  const title = $(`#title${postId}`).val();
+  const fileInput = $(`#photo${postId}`)[0];
+  const files = fileInput.files;
+  const description = $(`#detail${postId}`).val();
+  const userId = localStorage.getItem('id');
+
+  let imageId;
+
+  if (files.length > 0) {
+    imageId = await uploadImage(files);
+
+    if (!imageId) {
+      toastr.error('Failed to upload image. Check the console for details.');
+      return;
+    }
+
+    const preview = document.getElementById(`preview${postId}`);
+    preview.src = URL.createObjectURL(fileInput.files[0]);
+  }
+
+  let post = {
+    url: `https://cms.istad.co/api/sm-posts/${postId}`,
+    method: 'PUT',
+    timeout: 0,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: JSON.stringify({
+      data: {
+        title: title,
+        detail: description,
+        photo: imageId ? imageId[0].id : $(`#existingPhoto${postId}`).val(),
+        user: userId,
+      },
+    }),
+  };
+
+  $.ajax(post)
+    .done(function (response) {
+      if (response && response.data && response.data.id) {
+        toastr.success('Post updated successfully!');
+
+        setTimeout(function () {
+          location.reload();
+        }, 2000);
+
+        if (files.length > 0) {
+          clearPreviewImage(postId);
+        }
+
+        $(`#title${postId}`).val('');
+        $(`#photo${postId}`).val('');
+        $(`#detail${postId}`).val('');
+
+        hideEditModal(postId);
+      } else {
+        toastr.error('Failed to update post. Check the console for details.');
+      }
+    })
+    .fail(function (jqXHR, textStatus, errorThrown) {
+      console.error('Error updating post:', textStatus, errorThrown);
+      toastr.error('Failed to update post. Check the console for details.');
+    });
+}
+
+function clearPreviewImage(postId) {
+  const preview = document.getElementById('preview');
+  preview.src = '';
+  preview.classList.add('hidden');
+
+  const fileInput = document.getElementById(`photo${postId}`);
+  fileInput.value = '';
+}
+
+async function uploadImage(files) {
+  const formData = new FormData();
+
+  for (const file of files) {
+    formData.append('files', file);
+  }
+
+  try {
+    const res = await fetch('https://cms.istad.co/api/upload', {
+      method: 'POST',
+      body: formData,
+    });
+
+    if (!res.ok) {
+      throw new Error(`Failed to upload image. Status: ${res.status}`);
+    }
+
+    return res.json();
+  } catch (error) {
+    console.error('Error uploading image:', error);
+    throw error;
+  }
+}
