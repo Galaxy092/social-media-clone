@@ -112,7 +112,7 @@ $(document).ready(function () {
               <!-- Edit modal -->
               <div id="editModal${
                 post.id
-              }" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+              }" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
                   <div class="relative p-4 w-full max-w-md max-h-full">
                       <!-- Modal content -->
                       <div class="relative bg-white rounded-lg shadow">
@@ -234,7 +234,7 @@ $(document).ready(function () {
                             </div>
                             
                             <!-- Delete Modal -->
-                            <div id="deleteModal" class="fixed inset-0 flex items-center justify-center z-50 hidden shadow-md">
+                            <div id="deleteModal" class="fixed inset-0 items-center justify-center z-50 hidden shadow-md">
                               <div class="bg-gray-200 rounded-lg p-8">
                                 <p class="text-lg text-center mb-4 ">Are you sure you want to delete this item?</p>
                                 <div class="flex justify-center">
@@ -340,12 +340,16 @@ $(document).ready(function () {
             );
 
             // Display only the latest two comments
-            const latestComments = post.comments.slice(0, 2);
+            const latestComments = post.comments.slice(0, 5);
             $.each(latestComments, function (commentIndex, comment) {
+              console.log(comment.user.id);
               let commentPf = `<img class="rounded-full max-w-none w-10 h-10 object-cover" src="https://cms.istad.co${comment.user.profile.url}" />`;
               let commentContent = `<p>${comment.comment}</p>`;
               let commentDate = `${formatDate(comment.publishedAt)}`;
               let commentUsername = `<a class="inline-block text-base font-bold mr-2" href="/src/pages/details.html?id=${comment.user.id}">${comment.user.username}</a>`;
+
+              let userId = parseInt(localStorage.getItem('id'));
+              let currentUser = comment.user.id === userId
 
               // Append each comment to the postContainer
               let commentElement = $(`
@@ -369,7 +373,7 @@ $(document).ready(function () {
                             <div class="dropdown ml-auto">
                                 <button class="py-2 px-4 font-medium hover:bg-slate-50 rounded-lg dropdown-toggle" type="button" id="dropdownMenuButton_${comment.id}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton_${comment.id}">
-                                    <a class="dropdown-item delete-comment-btn" href="#">Delete</a>
+                                ${currentUser ? '<a class="dropdown-item delete-comment-btn" href="#">Delete</a>' : ''}
                                     <!-- Add other dropdown options if needed -->
                                 </div>
                             </div>
@@ -611,6 +615,7 @@ function deleteItem(postId) {
 function showDeleteModal(postId) {
   // Show the delete modal
   document.getElementById('deleteModal').classList.remove('hidden');
+  document.getElementById('deleteModal').classList.add('flex');
 
   // Store the postId in a global variable
   window.currentPostId = postId;
@@ -922,42 +927,45 @@ $(document).ready(function () {
   fetchAndDisplayUserData();
 });
 
-//Function Update Post 
+// Function to show the edit modal
 function showEditModal(postId) {
-  document.getElementById(`editModal${postId}`).classList.remove('hidden');
+  const modal = $(`#editModal${postId}`);
+  modal.removeClass('hidden').addClass('flex');
 }
 
+// Function to hide the edit modal
 function hideEditModal(postId) {
-  document.getElementById(`editModal${postId}`).classList.add('hidden');
+  $(`#editModal${postId}`).addClass('hidden');
 }
 
+// Function to preview image during edit
 function previewImageEdit(postId) {
-  const fileInput = document.getElementById(`photo${postId}`);
-  const preview = document.getElementById(`preview${postId}`);
-  const labelPreview = document.getElementById(`labelPreview${postId}`);
+  const fileInput = $(`#photo${postId}`)[0];
+  const preview = $(`#preview${postId}`);
+  const labelPreview = $(`#labelPreview${postId}`);
 
   if (fileInput.files && fileInput.files[0]) {
     const reader = new FileReader();
 
-    reader.onload = function (e) {
-      preview.src = e.target.result;
-      preview.classList.remove('hidden');
-      labelPreview.classList.remove('hidden');
+    reader.onload = (e) => {
+      preview.attr('src', e.target.result).removeClass('hidden');
+      labelPreview.removeClass('hidden');
     };
 
     reader.readAsDataURL(fileInput.files[0]);
   }
 }
 
+// Function to clear image preview during edit
 function clearPreviewImage(postId) {
-  const preview = document.getElementById(`preview${postId}`);
-  preview.src = '';
-  preview.classList.add('hidden');
+  const preview = $(`#preview${postId}`);
+  const fileInput = $(`#photo${postId}`);
 
-  const fileInput = document.getElementById(`photo${postId}`);
-  fileInput.value = '';
+  preview.attr('src', '').addClass('hidden');
+  fileInput.val('');
 }
 
+// Function to update a post
 async function updatePost(postId) {
   const title = $(`#title${postId}`).val();
   const fileInput = $(`#photo${postId}`)[0];
@@ -975,11 +983,11 @@ async function updatePost(postId) {
       return;
     }
 
-    const preview = document.getElementById(`preview${postId}`);
-    preview.src = URL.createObjectURL(fileInput.files[0]);
+    const preview = $(`#preview${postId}`);
+    preview.attr('src', URL.createObjectURL(fileInput.files[0]));
   }
 
-  let post = {
+  const post = {
     url: `https://cms.istad.co/api/sm-posts/${postId}`,
     method: 'PUT',
     timeout: 0,
@@ -988,7 +996,7 @@ async function updatePost(postId) {
     },
     data: JSON.stringify({
       data: {
-        title: title,
+        title,
         detail: description,
         photo: imageId ? imageId[0].id : $(`#existingPhoto${postId}`).val(),
         user: userId,
@@ -997,62 +1005,23 @@ async function updatePost(postId) {
   };
 
   $.ajax(post)
-    .done(function (response) {
+    .done((response) => {
       if (response && response.data && response.data.id) {
         toastr.success('Post updated successfully!');
-
-        setTimeout(function () {
-          location.reload();
-        }, 2000);
+        setTimeout(() => location.reload(), 2000);
 
         if (files.length > 0) {
           clearPreviewImage(postId);
         }
 
-        $(`#title${postId}`).val('');
-        $(`#photo${postId}`).val('');
-        $(`#detail${postId}`).val('');
-
+        $(`#title${postId}, #photo${postId}, #detail${postId}`).val('');
         hideEditModal(postId);
       } else {
         toastr.error('Failed to update post. Check the console for details.');
       }
     })
-    .fail(function (jqXHR, textStatus, errorThrown) {
+    .fail((jqXHR, textStatus, errorThrown) => {
       console.error('Error updating post:', textStatus, errorThrown);
       toastr.error('Failed to update post. Check the console for details.');
     });
-}
-
-function clearPreviewImage(postId) {
-  const preview = document.getElementById('preview');
-  preview.src = '';
-  preview.classList.add('hidden');
-
-  const fileInput = document.getElementById(`photo${postId}`);
-  fileInput.value = '';
-}
-
-async function uploadImage(files) {
-  const formData = new FormData();
-
-  for (const file of files) {
-    formData.append('files', file);
-  }
-
-  try {
-    const res = await fetch('https://cms.istad.co/api/upload', {
-      method: 'POST',
-      body: formData,
-    });
-
-    if (!res.ok) {
-      throw new Error(`Failed to upload image. Status: ${res.status}`);
-    }
-
-    return res.json();
-  } catch (error) {
-    console.error('Error uploading image:', error);
-    throw error;
-  }
 }

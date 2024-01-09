@@ -52,14 +52,14 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="/src/pages/friend.html"
+                                <a href="#" id="friendsLink"
                                     class="flex items-center py-2 px-10 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                                     <img src="../../img/Friends.svg" alt="Friends">
                                     <span class="ml-9 whitespace-nowrap">Friends</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="/src/pages/profile.html"
+                                <a href="#" id="profileLink1"
                                     class="flex items-center py-2 px-10 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                                     <img src="../../img/Profile.svg" alt="Profile">
                                     <span class="ml-9 whitespace-nowrap">Profile</span>
@@ -80,7 +80,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="/src/pages/setting.html"
+                                <a href="#" id="settingLink"
                                     class="flex items-center py-2 px-10 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                                     <img src="../../img/Setting.svg" alt="Setting">
                                     <span class="ml-9 whitespace-nowrap">Setting</span>
@@ -90,8 +90,8 @@
                             <li>
                                 <a href="javascript:void(0);" onclick="logout()"
                                     class="flex items-center py-2 px-10 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                                    <img src="../../img/Logout.svg" alt="Setting">
-                                    <span class="ml-9 whitespace-nowrap">Logout</span>
+                                    <img class="text-3xl" id="logo" src="" alt="Logout">
+                                    <span class="ml-9 whitespace-nowrap" id="logoutText">Logout</span>
                                 </a>
                             </li>
                         </ul>
@@ -447,7 +447,7 @@
                     <div class="grid grid-cols-1 gap-8 mt-8 xl:mt-16 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-3">
                         <div
                             class="flex flex-col items-center p-8 transition-colors duration-300 transform border cursor-pointer rounded-xl hover:border-transparent group hover:bg-blue-400">
-                            <img class="object-cover w-32 h-32 rounded-full ring-4 ring-gray-300" src="/img/chhaya.jpg"
+                            <img class="object-cover w-32 h-32 rounded-full ring-4 ring-gray-300" src="/img/Chhaya.png"
                                 alt="">
 
                             <h1 class="mt-4 text-2xl font-semibold text-gray-700 capitalize group-hover:text-white">
@@ -944,40 +944,10 @@
                 </section>
 
                 <!-- recommend section -->
-                <section class="h-fit bg-white rounded-lg pb-4 w-full gap-y-4 flex flex-col">
+                <section class="h-fit bg-white rounded-lg pb-4 w-full gap-y-4 flex flex-col" id="categorySection">
                     <p class="font-bold text-start text-gray-500 bg-white rounded-lg px-4 pt-4 h-fit">
                         HIGHLY RECOMMEND FOR YOU
                     </p>
-
-                    <div class="flex mx-4 gap-4">
-                        <div class="mt-3">
-                            <i class="fa-solid fa-circle-chevron-right text-blue-600 fa-xl"></i>
-                        </div>
-                        <div class="text-start">
-                            <p class="font-bold">Business Knowledge</p>
-                            <p class="text-base">24 posts</p>
-                        </div>
-                    </div>
-
-                    <div class="flex mx-4 gap-4">
-                        <div class="mt-3">
-                            <i class="fa-solid fa-circle-chevron-right text-blue-600 fa-xl"></i>
-                        </div>
-                        <div class="text-start">
-                            <p class="font-bold">Education</p>
-                            <p class="text-base">24 posts</p>
-                        </div>
-                    </div>
-
-                    <div class="flex mx-4 gap-4">
-                        <div class="mt-3">
-                            <i class="fa-solid fa-circle-chevron-right text-blue-600 fa-xl"></i>
-                        </div>
-                        <div class="text-start">
-                            <p class="font-bold">LifeStyle</p>
-                            <p class="text-base">24 posts</p>
-                        </div>
-                    </div>
                 </section>
             </div>
         </aside>

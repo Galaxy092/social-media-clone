@@ -1175,6 +1175,10 @@ video {
   align-items: center;
 }
 
+.justify-start {
+  justify-content: flex-start;
+}
+
 .justify-end {
   justify-content: flex-end;
 }
@@ -2186,6 +2190,10 @@ video {
     align-items: flex-start;
   }
 
+  .sm\:justify-center {
+    justify-content: center;
+  }
+
   .sm\:gap-4 {
     gap: 1rem;
   }
@@ -2317,6 +2325,14 @@ video {
 
   .md\:grid-cols-3 {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .md\:justify-start {
+    justify-content: flex-start;
+  }
+
+  .md\:justify-center {
+    justify-content: center;
   }
 
   .md\:gap-8 {
